@@ -8,7 +8,7 @@
 ## Installation
 
 ```
-haxelib git zame-miscutils https://github.com/restorer/zame-haxe-stringutils.git
+haxelib git zame-stringutils https://github.com/restorer/zame-haxe-stringutils.git
 ```
 
 ### Utf8Ext
