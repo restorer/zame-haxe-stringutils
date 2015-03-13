@@ -3,6 +3,10 @@ package org.zamedev.lib;
 import haxe.Utf8;
 import org.zamedev.lib.internal.TransliterationInternalBe;
 
+// TODO:
+// - https://ru.wikipedia.org/wiki/ISO_9
+// - https://github.com/xguest/iso_9_js/blob/master/translit.js
+
 class Transliteration {
 	static var mapNot:Map<Int, Bool>;
 	static var mapBe:Map<Int, String>;
