@@ -56,10 +56,8 @@ class Utf8Ext {
 			ucaseMap = new Map<Int, Int>();
 
 			Utf8ExtInternal.fillUpperToLowerMap(lcaseMap);
+			Utf8ExtInternal.fillLowerToUpperMap(ucaseMap);
 
-			for (k in lcaseMap.keys()) {
-				ucaseMap[lcaseMap[k]] = k;
-			}
 		#end
 	}
 
