@@ -100,6 +100,15 @@ class Utf8Ext {
  * Map generator for Utf8ExtInternal
  * Can generate from ftp://ftp.unicode.org/Public/UNIDATA/CaseFolding.txt
  * Simple case folding (C + S), only CAPITAL
+ *
+ * Actually CaseFolding.txt is only right for upper to lower,
+ * in case of lower to upper, it's WRONG to use this file.
+ *
+ * ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt should be used instead.
+ * ftp://ftp.unicode.org/Public/3.2-Update/UnicodeData-3.2.0.html
+ *
+ * Also see https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_71/nls/rbagsucslevel1maptble.htm
+ *
 
 class CaseMapsGenerator {
 	static function main() {
