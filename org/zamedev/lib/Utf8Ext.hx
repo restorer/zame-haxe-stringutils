@@ -57,7 +57,6 @@ class Utf8Ext {
 
 			Utf8ExtInternal.fillUpperToLowerMap(lcaseMap);
 			Utf8ExtInternal.fillLowerToUpperMap(ucaseMap);
-
 		#end
 	}
 
@@ -93,57 +92,3 @@ class Utf8Ext {
 		return new EReg("[" + prepend + charsRe + "]", "gu");
 	}
 }
-
-/*
- * Map generator for Utf8ExtInternal
- * Can generate from ftp://ftp.unicode.org/Public/UNIDATA/CaseFolding.txt
- * Simple case folding (C + S), only CAPITAL
- *
- * Actually CaseFolding.txt is only right for upper to lower,
- * in case of lower to upper, it's WRONG to use this file.
- *
- * ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt should be used instead.
- * ftp://ftp.unicode.org/Public/3.2-Update/UnicodeData-3.2.0.html
- *
- * Also see https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_71/nls/rbagsucslevel1maptble.htm
- *
-
-class CaseMapsGenerator {
-	static function main() {
-		var buf = new StringBuf();
-
-		buf.add("package org.zamedev.lib;\n");
-		buf.add("\n");
-		buf.add("class Utf8ExtInternal {\n");
-		buf.add("\tpublic static function fillUpperToLowerMap(map:Map<Int, Int>):Void {\n");
-
-		var fi = sys.io.File.read("CaseFolding.txt", true);
-
-		while (true) {
-			var line:String;
-
-			try {
-				line = fi.readLine();
-			} catch (ex:haxe.io.Eof) {
-				break;
-			}
-
-			var re = ~/^([0-9A-Z]+); [CS]; ([0-9A-Z]+); #/;
-
-			if (re.match(line)) {
-				buf.add("\t\tmap[0x" + re.matched(1) + "] = 0x" + re.matched(2) + ";\n");
-			}
-		}
-
-		fi.close();
-
-		buf.add("\t}\n");
-		buf.add("}\n");
-
-		var fo = sys.io.File.write("Utf8ExtInternal.hx", true);
-		fo.writeString(buf.toString());
-		fo.close();
-	}
-}
-
-*/
