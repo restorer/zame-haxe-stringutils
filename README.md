@@ -46,7 +46,6 @@ This library is finished. Later I have plant to merge several smaller libraries 
 | Critical bugfixes | Yes |
 | Pull requests | Accepted (after review) |
 | Issues | Monitored, but if you want to change something - submit a pull request |
-| OpenFL version planned to support | Up to 4.x, and probably later |
 | Estimated end-of-life | Up to 2017 (new library will be created later) |
 
 ### Roadmap for future
