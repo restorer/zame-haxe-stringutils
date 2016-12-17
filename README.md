@@ -27,7 +27,7 @@ But what about cross-platform `toLowerCase()` or `toUpperCase()`? What regular e
 
 ### Transliteration
 
-Allows you to generate cool-looking SEO-friendly URL from string on belarusian language.
+Allows you to generate cool-looking SEO-friendly URL from string on belarusian or russian language.
 
 ```haxe
 trace(Transliteration.be("Уладзімір Караткевіч - Хрыстос Прызямліўся Ў Гародні"));
@@ -50,4 +50,4 @@ This library is finished. Later I have plant to merge several smaller libraries 
 
 ### Roadmap for future
 
-  - [ ] Add russian language support to Transliteration class
+  - [x] Add russian language support to Transliteration class

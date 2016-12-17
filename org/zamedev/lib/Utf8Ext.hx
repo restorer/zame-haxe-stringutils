@@ -4,11 +4,11 @@ import haxe.Utf8;
 import org.zamedev.lib.internal.Utf8ExtInternal;
 
 class Utf8Ext {
-	static var charsRe:String;
+	private static var charsRe : String;
 
 	#if (neko || php || cpp)
-		static var lcaseMap:Map<Int, Int>;
-		static var ucaseMap:Map<Int, Int>;
+		private static var lcaseMap : Map<Int, Int>;
+		private static var ucaseMap : Map<Int, Int>;
 	#end
 
 	static function __init__() {
@@ -60,11 +60,11 @@ class Utf8Ext {
 		#end
 	}
 
-	public static function toLowerCase(s:String):String {
+	public static function toLowerCase(s : String) : String {
 		#if (neko || php || cpp)
 			var r = new Utf8();
 
-			Utf8.iter(s, function(v) {
+			Utf8.iter(s, function(v : Int) : Void {
 				r.addChar(lcaseMap.exists(v) ? lcaseMap[v] : v);
 			});
 
@@ -74,11 +74,11 @@ class Utf8Ext {
 		#end
 	}
 
-	public static function toUpperCase(s:String):String {
+	public static function toUpperCase(s : String) : String {
 		#if (neko || php || cpp)
 			var r = new Utf8();
 
-			Utf8.iter(s, function(v) {
+			Utf8.iter(s, function(v : Int) : Void {
 				r.addChar(ucaseMap.exists(v) ? ucaseMap[v] : v);
 			});
 
@@ -88,7 +88,7 @@ class Utf8Ext {
 		#end
 	}
 
-	public static function getUnicodeRe(prepend:String = ""):EReg {
+	public static function getUnicodeRe(prepend : String = "") : EReg {
 		return new EReg("[" + prepend + charsRe + "]", "gu");
 	}
 }

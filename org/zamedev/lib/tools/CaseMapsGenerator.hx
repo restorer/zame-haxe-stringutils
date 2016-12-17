@@ -5,6 +5,7 @@ import haxe.io.Eof;
 import haxe.io.Path;
 import neko.Lib;
 import sys.io.File;
+import org.zamedev.lib.ds.LinkedMap;
 
 /**
  * Map generator for Utf8ExtInternal
@@ -18,7 +19,7 @@ class CaseMapsGenerator {
     private static inline var IDX_GENERAL_CATEGORY : Int = 2;
     // Canonical Combining Classes = 3
     // Bidirectional Category = 4
-    // Character Decomposition Mapping = 5
+    private static inline var IDX_CHARACTER_DECOMPOSITION_MAPPING : Int = 5;
     // Decimal digit value = 6
     // Digit value = 7
     // Numeric value = 8
@@ -30,6 +31,8 @@ class CaseMapsGenerator {
     // Titlecase Mapping = 14
     private static inline var IDX_LAST : Int = 15;
 
+    private static var unicodeMap : LinkedMap<String, Array<String>>;
+
     macro private static function resolveThisPath() {
         return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/tools/CaseMapsGenerator.hx") };
     }
@@ -38,13 +41,9 @@ class CaseMapsGenerator {
         return Path.directory(resolveThisPath()) + "/../internal";
     }
 
-    private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
-        Lib.println('Generating ${funcName}...');
-
+    private static function readUnicodeData() : Void {
         var fi = File.read("additional/UnicodeData.txt", true);
-        var existing = new Map<String, Bool>();
-
-        sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
+        unicodeMap = new LinkedMap<String, Array<String>>();
 
         while (true) {
             var row : Array<String>;
@@ -55,21 +54,39 @@ class CaseMapsGenerator {
                 break;
             }
 
-            if (row.length < IDX_LAST || row[IDX_GENERAL_CATEGORY] != generalCategory || row[mappingIdx] == "") {
+            if (row.length < IDX_LAST || (row[IDX_GENERAL_CATEGORY] != "Lu" && row[IDX_GENERAL_CATEGORY] != "Ll")) {
                 continue;
             }
 
-            if (existing.exists(row[IDX_CODE_POINT])) {
-                Lib.println('${funcName} : already existing mapping for ${row[IDX_CODE_POINT]}');
+            unicodeMap[row[IDX_CODE_POINT]] = row;
+        }
+
+        fi.close();
+    }
+
+    private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
+        Lib.println('Generating ${funcName}...');
+        sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
+
+        for (codePoint in unicodeMap.keys()) {
+            var row : Array<String> = unicodeMap[codePoint];
+
+            if (row[IDX_GENERAL_CATEGORY] != generalCategory) {
                 continue;
             }
 
-            existing.set(row[IDX_CODE_POINT], true);
+            while (row != null && row[mappingIdx] == "" && row[IDX_CHARACTER_DECOMPOSITION_MAPPING] != "") {
+                row = unicodeMap[row[IDX_CHARACTER_DECOMPOSITION_MAPPING].split(" ")[0]];
+            }
 
-            sb.add('\t\tmap[0x${row[IDX_CODE_POINT]}] = 0x${row[mappingIdx]}; // ');
+            if (row == null || row[mappingIdx] == "") {
+                continue;
+            }
+
+            sb.add('\t\tmap[0x${codePoint}] = 0x${row[mappingIdx]}; // ');
 
             var r = new Utf8();
-            r.addChar(Std.parseInt('0x${row[IDX_CODE_POINT]}'));
+            r.addChar(Std.parseInt('0x${codePoint}'));
             sb.add(r.toString());
 
             sb.add(" --> ");
@@ -82,11 +99,12 @@ class CaseMapsGenerator {
         }
 
         sb.add("\t}\n");
-        fi.close();
     }
 
     public static function main() : Void {
-        Lib.println("Starting...");
+        Lib.println("Preparing...");
+
+        readUnicodeData();
 
         var sb = new StringBuf();
 
