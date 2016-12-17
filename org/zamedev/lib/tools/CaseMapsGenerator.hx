@@ -75,6 +75,8 @@ class CaseMapsGenerator {
                 continue;
             }
 
+            var characterName : String = row[IDX_CHARACTER_NAME];
+
             while (row != null && row[mappingIdx] == "" && row[IDX_CHARACTER_DECOMPOSITION_MAPPING] != "") {
                 row = unicodeMap[row[IDX_CHARACTER_DECOMPOSITION_MAPPING].split(" ")[0]];
             }
@@ -95,7 +97,7 @@ class CaseMapsGenerator {
             r.addChar(Std.parseInt('0x${row[mappingIdx]}'));
             sb.add(r.toString());
 
-            sb.add(' (${row[IDX_CHARACTER_NAME]})\n');
+            sb.add(' (${characterName})\n');
         }
 
         sb.add("\t}\n");
