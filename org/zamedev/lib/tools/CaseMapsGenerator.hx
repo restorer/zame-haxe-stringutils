@@ -1,119 +1,108 @@
 package org.zamedev.lib.tools;
 
 import haxe.Utf8;
+import haxe.io.Eof;
+import haxe.io.Path;
 import neko.Lib;
+import sys.io.File;
 
 /**
  * Map generator for Utf8ExtInternal
- * Can generate from ftp://ftp.unicode.org/Public/UNIDATA/CaseFolding.txt
- * Simple case folding (C + S), only CAPITAL
+ * Can generate from ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
  *
- * Actually CaseFolding.txt is only right for upper to lower,
- * in case of lower to upper, it's WRONG to use this file.
- *
- * ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt should be used instead.
- * ftp://ftp.unicode.org/Public/3.2-Update/UnicodeData-3.2.0.html
- *
- * Also see https://www.ibm.com/support/knowledgecenter/ssw_ibm_i_71/nls/rbagsucslevel1maptble.htm
+ * Reference - ftp://ftp.unicode.org/Public/3.2-Update/UnicodeData-3.2.0.html
  */
 class CaseMapsGenerator {
-    static function main() {
-        var buf = new StringBuf();
+    private static inline var IDX_CODE_POINT : Int = 0;
+    private static inline var IDX_CHARACTER_NAME : Int = 1;
+    private static inline var IDX_GENERAL_CATEGORY : Int = 2;
+    // Canonical Combining Classes = 3
+    // Bidirectional Category = 4
+    // Character Decomposition Mapping = 5
+    // Decimal digit value = 6
+    // Digit value = 7
+    // Numeric value = 8
+    // Mirrored = 9
+    // Unicode 1.0 Name = 10
+    // 10646 comment field = 11
+    private static inline var IDX_UPPERCASE_MAPPING : Int = 12;
+    private static inline var IDX_LOWERCASE_MAPPING : Int = 13;
+    // Titlecase Mapping = 14
+    private static inline var IDX_LAST : Int = 15;
 
-        buf.add("package org.zamedev.lib.internal;\n");
-        buf.add("\n");
-        buf.add("// Use tools/CaseMapsGenerator.hx to generate this file\n");
-        buf.add("class Utf8ExtInternal {\n");
-        buf.add("\tpublic static function fillUpperToLowerMap(map:Map<Int, Int>):Void {\n");
+    macro private static function resolveThisPath() {
+        return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/tools/CaseMapsGenerator.hx") };
+    }
 
-        var fi = sys.io.File.read("CaseFolding.txt", true);
+    private static function resolveInternalDir() : String {
+        return Path.directory(resolveThisPath()) + "/../internal";
+    }
+
+    private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
+        Lib.println('Generating ${funcName}...');
+
+        var fi = File.read("additional/UnicodeData.txt", true);
         var existing = new Map<String, Bool>();
 
+        sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
+
         while (true) {
-            var line:String;
+            var row : Array<String>;
 
             try {
-                line = fi.readLine();
-            } catch (ex:haxe.io.Eof) {
+                row = fi.readLine().split(";");
+            } catch (ex : Eof) {
                 break;
             }
 
-            var re = ~/^([0-9A-Z]+); [CS]; ([0-9A-Z]+); # (.+)$/;
-
-            if (re.match(line)) {
-                if (existing.exists(re.matched(1))) {
-                    Lib.println("fillUpperToLowerMap : already existing mapping for " + re.matched(1));
-                    continue;
-                } else {
-                    existing.set(re.matched(1), true);
-                }
-
-                buf.add("\t\tmap[0x" + re.matched(1) + "] = 0x" + re.matched(2) + "; // ");
-
-                var r = new Utf8();
-                r.addChar(Std.parseInt("0x" + re.matched(1)));
-                buf.add(r.toString());
-
-                buf.add(" --> ");
-
-                var r = new Utf8();
-                r.addChar(Std.parseInt("0x" + re.matched(2)));
-                buf.add(r.toString());
-
-                buf.add(" (" + re.matched(3) + ")\n");
+            if (row.length < IDX_LAST || row[IDX_GENERAL_CATEGORY] != generalCategory || row[mappingIdx] == "") {
+                continue;
             }
+
+            if (existing.exists(row[IDX_CODE_POINT])) {
+                Lib.println('${funcName} : already existing mapping for ${row[IDX_CODE_POINT]}');
+                continue;
+            }
+
+            existing.set(row[IDX_CODE_POINT], true);
+
+            sb.add('\t\tmap[0x${row[IDX_CODE_POINT]}] = 0x${row[mappingIdx]}; // ');
+
+            var r = new Utf8();
+            r.addChar(Std.parseInt('0x${row[IDX_CODE_POINT]}'));
+            sb.add(r.toString());
+
+            sb.add(" --> ");
+
+            var r = new Utf8();
+            r.addChar(Std.parseInt('0x${row[mappingIdx]}'));
+            sb.add(r.toString());
+
+            sb.add(' (${row[IDX_CHARACTER_NAME]})\n');
         }
 
+        sb.add("\t}\n");
         fi.close();
+    }
 
-        buf.add("\t}\n");
-        buf.add("\n");
-        buf.add("\tpublic static function fillLowerToUpperMap(map:Map<Int, Int>):Void {\n");
+    public static function main() : Void {
+        Lib.println("Starting...");
 
-        var fi = sys.io.File.read("CaseFolding.txt", true);
+        var sb = new StringBuf();
 
-        while (true) {
-            var line:String;
+        sb.add("package org.zamedev.lib.internal;\n");
+        sb.add("\n");
+        sb.add("// Use org.zamedev.lib.tools.CaseMapsGenerator to generate this file\n");
+        sb.add("\n");
+        sb.add("class Utf8ExtInternal {\n");
+        appendMapperFunc(sb, "fillUpperToLowerMap", "Lu", IDX_LOWERCASE_MAPPING);
+        sb.add("\n");
+        appendMapperFunc(sb, "fillLowerToUpperMap", "Ll", IDX_UPPERCASE_MAPPING);
+        sb.add("}\n");
 
-            try {
-                line = fi.readLine();
-            } catch (ex:haxe.io.Eof) {
-                break;
-            }
+        Lib.println("Writing result file...");
+        File.saveContent(resolveInternalDir() + "/Utf8ExtInternal.hx" , sb.toString());
 
-            var re = ~/^([0-9A-Z]+); [CS]; ([0-9A-Z]+); # (.+)$/;
-
-            if (re.match(line)) {
-                if (existing.exists(re.matched(2))) {
-                    Lib.println("fillLowerToUpperMap : already existing mapping for " + re.matched(2));
-                    continue;
-                } else {
-                    existing.set(re.matched(2), true);
-                }
-
-                buf.add("\t\tmap[0x" + re.matched(2) + "] = 0x" + re.matched(1) + "; // ");
-
-                var r = new Utf8();
-                r.addChar(Std.parseInt("0x" + re.matched(2)));
-                buf.add(r.toString());
-
-                buf.add(" --> ");
-
-                var r = new Utf8();
-                r.addChar(Std.parseInt("0x" + re.matched(1)));
-                buf.add(r.toString());
-
-                buf.add(" (" + re.matched(3) + ")\n");
-            }
-        }
-
-        fi.close();
-
-        buf.add("\t}\n");
-        buf.add("}\n");
-
-        var fo = sys.io.File.write("Utf8ExtInternal.hx", true);
-        fo.writeString(buf.toString());
-        fo.close();
+        Lib.println("Done");
     }
 }

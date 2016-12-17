@@ -1,0 +1,4 @@
+-main org.zamedev.lib.tools.CaseMapsGenerator
+-neko case-maps-generator.n
+-cmd neko case-maps-generator.n
+-cmd rm case-maps-generator.n

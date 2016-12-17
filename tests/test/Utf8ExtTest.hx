@@ -23,6 +23,7 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toLowerCase("7"), "7");
         Assert.areEqual(Utf8Ext.toLowerCase("8"), "8");
         Assert.areEqual(Utf8Ext.toLowerCase("9"), "9");
+
         Assert.areEqual(Utf8Ext.toLowerCase("A"), "a");
         Assert.areEqual(Utf8Ext.toLowerCase("B"), "b");
         Assert.areEqual(Utf8Ext.toLowerCase("C"), "c");
@@ -49,6 +50,7 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toLowerCase("X"), "x");
         Assert.areEqual(Utf8Ext.toLowerCase("Y"), "y");
         Assert.areEqual(Utf8Ext.toLowerCase("Z"), "z");
+
         Assert.areEqual(Utf8Ext.toLowerCase("А"), "а");
         Assert.areEqual(Utf8Ext.toLowerCase("Б"), "б");
         Assert.areEqual(Utf8Ext.toLowerCase("В"), "в");
@@ -82,7 +84,45 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toLowerCase("Э"), "э");
         Assert.areEqual(Utf8Ext.toLowerCase("Ю"), "ю");
         Assert.areEqual(Utf8Ext.toLowerCase("Я"), "я");
+
         Assert.areEqual(Utf8Ext.toLowerCase("Ä"), "ä");
+
+        Assert.areEqual(Utf8Ext.toUpperCase("Α"), "α");
+        Assert.areEqual(Utf8Ext.toUpperCase("Β"), "β");
+        Assert.areEqual(Utf8Ext.toUpperCase("Γ"), "γ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Δ"), "δ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ε"), "ε");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ζ"), "ζ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Η"), "η");
+        Assert.areEqual(Utf8Ext.toUpperCase("Θ"), "θ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ι"), "ι");
+        Assert.areEqual(Utf8Ext.toUpperCase("Κ"), "κ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Λ"), "λ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Μ"), "μ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ν"), "ν");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ξ"), "ξ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ο"), "ο");
+        Assert.areEqual(Utf8Ext.toUpperCase("Π"), "π");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ρ"), "ρ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Σ"), "σ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Τ"), "τ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Υ"), "υ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Φ"), "φ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Χ"), "χ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ψ"), "ψ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ω"), "ω");
+        Assert.areEqual(Utf8Ext.toUpperCase("ς"), "ς");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ά"), "ά");
+        Assert.areEqual(Utf8Ext.toUpperCase("Έ"), "έ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ή"), "ή");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ί"), "ί");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ό"), "ό");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ύ"), "ύ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ϋ́"), "ΰ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ώ"), "ώ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ϊ"), "ϊ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ϊ́"), "ΐ");
+        Assert.areEqual(Utf8Ext.toUpperCase("Ϋ"), "ϋ");
     }
 
     @Test
@@ -101,6 +141,7 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toUpperCase("7"), "7");
         Assert.areEqual(Utf8Ext.toUpperCase("8"), "8");
         Assert.areEqual(Utf8Ext.toUpperCase("9"), "9");
+
         Assert.areEqual(Utf8Ext.toUpperCase("a"), "A");
         Assert.areEqual(Utf8Ext.toUpperCase("b"), "B");
         Assert.areEqual(Utf8Ext.toUpperCase("c"), "C");
@@ -127,6 +168,7 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toUpperCase("x"), "X");
         Assert.areEqual(Utf8Ext.toUpperCase("y"), "Y");
         Assert.areEqual(Utf8Ext.toUpperCase("z"), "Z");
+
         Assert.areEqual(Utf8Ext.toUpperCase("а"), "А");
         Assert.areEqual(Utf8Ext.toUpperCase("б"), "Б");
         Assert.areEqual(Utf8Ext.toUpperCase("в"), "В");
@@ -160,6 +202,44 @@ class Utf8ExtTest {
         Assert.areEqual(Utf8Ext.toUpperCase("э"), "Э");
         Assert.areEqual(Utf8Ext.toUpperCase("ю"), "Ю");
         Assert.areEqual(Utf8Ext.toUpperCase("я"), "Я");
+
         Assert.areEqual(Utf8Ext.toUpperCase("ä"), "Ä");
+
+        Assert.areEqual(Utf8Ext.toUpperCase("α"), "Α");
+        Assert.areEqual(Utf8Ext.toUpperCase("β"), "Β");
+        Assert.areEqual(Utf8Ext.toUpperCase("γ"), "Γ");
+        Assert.areEqual(Utf8Ext.toUpperCase("δ"), "Δ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ε"), "Ε");
+        Assert.areEqual(Utf8Ext.toUpperCase("ζ"), "Ζ");
+        Assert.areEqual(Utf8Ext.toUpperCase("η"), "Η");
+        Assert.areEqual(Utf8Ext.toUpperCase("θ"), "Θ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ι"), "Ι");
+        Assert.areEqual(Utf8Ext.toUpperCase("κ"), "Κ");
+        Assert.areEqual(Utf8Ext.toUpperCase("λ"), "Λ");
+        Assert.areEqual(Utf8Ext.toUpperCase("μ"), "Μ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ν"), "Ν");
+        Assert.areEqual(Utf8Ext.toUpperCase("ξ"), "Ξ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ο"), "Ο");
+        Assert.areEqual(Utf8Ext.toUpperCase("π"), "Π");
+        Assert.areEqual(Utf8Ext.toUpperCase("ρ"), "Ρ");
+        Assert.areEqual(Utf8Ext.toUpperCase("σ"), "Σ");
+        Assert.areEqual(Utf8Ext.toUpperCase("τ"), "Τ");
+        Assert.areEqual(Utf8Ext.toUpperCase("υ"), "Υ");
+        Assert.areEqual(Utf8Ext.toUpperCase("φ"), "Φ");
+        Assert.areEqual(Utf8Ext.toUpperCase("χ"), "Χ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ψ"), "Ψ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ω"), "Ω");
+        Assert.areEqual(Utf8Ext.toUpperCase("ς"), "ς");
+        Assert.areEqual(Utf8Ext.toUpperCase("ά"), "Ά");
+        Assert.areEqual(Utf8Ext.toUpperCase("έ"), "Έ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ή"), "Ή");
+        Assert.areEqual(Utf8Ext.toUpperCase("ί"), "Ί");
+        Assert.areEqual(Utf8Ext.toUpperCase("ό"), "Ό");
+        Assert.areEqual(Utf8Ext.toUpperCase("ύ"), "Ύ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ΰ"), "Ϋ́");
+        Assert.areEqual(Utf8Ext.toUpperCase("ώ"), "Ώ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ϊ"), "Ϊ");
+        Assert.areEqual(Utf8Ext.toUpperCase("ΐ"), "Ϊ́");
+        Assert.areEqual(Utf8Ext.toUpperCase("ϋ"), "Ϋ");
     }
 }
