@@ -197,7 +197,7 @@ class CaseMapsGenerator {
             }
         }
 
-        s += ';\n';
+        s += '\n';
         numLines++;
         return s;
     }
