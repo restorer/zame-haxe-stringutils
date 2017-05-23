@@ -6,6 +6,7 @@ import haxe.io.Path;
 import neko.Lib;
 import sys.io.File;
 import org.zamedev.lib.ds.LinkedMap;
+using StringTools;
 
 /**
  * Map generator for Utf8ExtInternal
@@ -32,6 +33,15 @@ class CaseMapsGenerator {
     private static inline var IDX_LAST : Int = 15;
 
     private static var unicodeMap : LinkedMap<String, Array<String>>;
+    private static var firstChar = -1;
+    private static var firstIdx = -1;
+    private static var prevChar = -1;
+    private static var prevIdx = -1;
+    private static var curChar = -1;
+    private static var curIdx = -1;
+    private static var stepChar = 0;
+    private static var numChar = 0;
+    private static var numLines = 0;
 
     macro private static function resolveThisPath() {
         return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/tools/CaseMapsGenerator.hx") };
@@ -67,6 +77,7 @@ class CaseMapsGenerator {
     private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
         Lib.println('Generating ${funcName}...');
         sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
+        sb.add("\t\tvar i = 0;\n"); //to while cycles
 
         for (codePoint in unicodeMap.keys()) {
             var row : Array<String> = unicodeMap[codePoint];
@@ -85,22 +96,110 @@ class CaseMapsGenerator {
                 continue;
             }
 
-            sb.add('\t\tmap[0x${codePoint}] = 0x${row[mappingIdx]}; // ');
+            curChar = Std.parseInt('0x' + codePoint);
+            curIdx = Std.parseInt('0x' + row[mappingIdx]);
 
-            var r = new Utf8();
-            r.addChar(Std.parseInt('0x${codePoint}'));
-            sb.add(r.toString());
+            if (firstChar == -1) { //only first line
+                newChars();
+                continue;
+            }
 
-            sb.add(" --> ");
+            var s = '';
+            if (stepChar == 1) s = checkChars(true, false); //1,2,3
+            else if (stepChar == 2) s = checkChars(false, true); //1,3,5
+            else s = checkChars(true, true); //find relation
+            if (s != null) sb.add(s);
 
-            var r = new Utf8();
-            r.addChar(Std.parseInt('0x${row[mappingIdx]}'));
-            sb.add(r.toString());
+            //sb.add('\t\tmap[0x${codePoint}] = 0x${row[mappingIdx]}; // ');
 
-            sb.add(' (${characterName})\n');
+            //var r = new Utf8();
+            //r.addChar(Std.parseInt('0x${codePoint}'));
+            //sb.add(r.toString());
+
+            //sb.add(" --> ");
+
+            //var r = new Utf8();
+            //r.addChar(Std.parseInt('0x${row[mappingIdx]}'));
+            //sb.add(r.toString());
+
+            //sb.add(' (${characterName})\n');
         }
 
+        sb.add(addChars()); //latest line
+        firstChar = -1; //reset
+
         sb.add("\t}\n");
+        trace("Lines: " + numLines);
+        numLines = 0;
+    }
+
+    public static function newChars() : Void {
+        firstChar = curChar;
+        firstIdx = curIdx;
+        prevChar = firstChar;
+        prevIdx = firstIdx;
+        stepChar = 0;
+        numChar = 1;
+    }
+
+    public static function checkChars(one:Bool, two:Bool) : String {
+        var s = '';
+        if (one && curChar == prevChar+1 && curIdx == prevIdx+1) {
+            prevChar = curChar;
+            prevIdx = curIdx;
+            stepChar = 1;
+            numChar++;
+        } else if (two && curChar == prevChar+2 && curIdx == prevIdx+2) {
+            prevChar = curChar;
+            prevIdx = curIdx;
+            stepChar = 2;
+            numChar++;
+        } else {
+            s += addChars();
+            newChars();
+        }
+        return s;
+    }
+
+    public static function addChars(info:Bool=true) : String {
+        var s = '\t\t';
+        var char = StringTools.hex(firstChar, 4);
+        var idx = StringTools.hex(firstIdx, 4);
+        if (numChar > 1) {
+            if (stepChar == 1) s += 'for (i in 0...${numChar}) map[0x${char}+i] = 0x${idx}+i;';
+
+            else s += 'while (i < ${numChar*2}) { map[0x${char}+i] = 0x${idx}+i; i += 2; } i = 0;';
+
+        } else s += 'map[0x${char}] = 0x${idx};';
+
+        if (info) { //A-Z => a-z
+            s += ' //';
+            var r = new Utf8();
+            r.addChar(Std.parseInt('0x${char}'));
+            s += r.toString();
+            
+            if (numChar > 1) {
+                s += '-';
+                var r = new Utf8();
+                r.addChar(Std.parseInt('0x${char}')+numChar-1);
+                s += r.toString();
+            }
+            s += ' => ';
+            var r = new Utf8();
+            r.addChar(Std.parseInt('0x${idx}'));
+            s += r.toString();
+            
+            if (numChar > 1) {
+                s += '-';
+                var r = new Utf8();
+                r.addChar(Std.parseInt('0x${idx}')+numChar-1);
+                s += r.toString();
+            }
+        }
+
+        s += '\n';
+        numLines++;
+        return s;
     }
 
     public static function main() : Void {
