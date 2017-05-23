@@ -1,5 +1,6 @@
 import massive.munit.TestSuite;
 
+import CaseMapsGeneratorTest;
 import Utf8ExtTest;
 
 /**
@@ -14,6 +15,7 @@ class TestSuite extends massive.munit.TestSuite
 	{
 		super();
 
+		add(CaseMapsGeneratorTest);
 		add(Utf8ExtTest);
 	}
 }

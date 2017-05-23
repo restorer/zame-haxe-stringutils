@@ -4,7 +4,7 @@ import massive.munit.Assert;
 import org.zamedev.lib.Utf8Ext;
 
 class Utf8ExtTest {
-    public function new() : Void {
+    public function new() {
     }
 
     @Test
