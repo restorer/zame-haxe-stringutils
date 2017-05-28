@@ -55,6 +55,13 @@ cd tests
 haxelib run munit test
 ```
 
+To run tests for specific target:
+
+  - `haxelib run munit test -neko`
+  - `haxelib run munit test -cpp`
+  - `haxelib run munit test -js`
+  - `haxelib run munit test -as3`
+
 ### Roadmap for future
 
-  - [x] Add russian language support to Transliteration class
+  - [ ] Add russian language support to Transliteration class
