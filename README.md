@@ -64,4 +64,4 @@ To run tests for specific target:
 
 ### Roadmap for future
 
-  - [ ] Add russian language support to Transliteration class
+  - [x] Add russian language support to Transliteration class
