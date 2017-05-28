@@ -48,6 +48,13 @@ This library is finished. Later I have plant to merge several smaller libraries 
 | Issues | Monitored, but if you want to change something - submit a pull request |
 | Estimated end-of-life | Up to 2017 (new library will be created later) |
 
+## Runnint tests
+
+```
+cd tests
+haxelib run munit test
+```
+
 ### Roadmap for future
 
   - [x] Add russian language support to Transliteration class

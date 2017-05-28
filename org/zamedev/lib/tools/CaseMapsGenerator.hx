@@ -6,6 +6,7 @@ import haxe.io.Path;
 import neko.Lib;
 import sys.io.File;
 import org.zamedev.lib.ds.LinkedMap;
+
 using StringTools;
 
 /**
@@ -13,6 +14,8 @@ using StringTools;
  * Can generate from ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
  *
  * Reference - ftp://ftp.unicode.org/Public/3.2-Update/UnicodeData-3.2.0.html
+ *
+ * Thanks to https://github.com/RblSb for code generator optimizing ideas
  */
 class CaseMapsGenerator {
     private static inline var IDX_CODE_POINT : Int = 0;
@@ -33,15 +36,15 @@ class CaseMapsGenerator {
     private static inline var IDX_LAST : Int = 15;
 
     private static var unicodeMap : LinkedMap<String, Array<String>>;
-    private static var firstChar = -1;
-    private static var firstIdx = -1;
-    private static var prevChar = -1;
-    private static var prevIdx = -1;
-    private static var curChar = -1;
-    private static var curIdx = -1;
-    private static var stepChar = 0;
-    private static var numChar = 0;
-    private static var numLines = 0;
+    private static var seqFirstCodePoint : Int = -1;
+    private static var seqFirstMappedCodePoint : Int = -1;
+    private static var seqFirstCharacterName : String = null;
+    private static var seqLastCodePoint : Int = -1;
+    private static var seqLastMappedCodePoint : Int = -1;
+    private static var seqLastCharacterName : String = null;
+    private static var seqStep : Int = 0;
+    private static var seqLength : Int = 0;
+    private static var linesGenerated : Int = 0;
 
     macro private static function resolveThisPath() {
         return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/tools/CaseMapsGenerator.hx") };
@@ -74,10 +77,75 @@ class CaseMapsGenerator {
         fi.close();
     }
 
+    private static function initSequence(codePoint : Int, mappedCodePoint : Int, characterName : String) : Void {
+        seqFirstCodePoint = codePoint;
+        seqFirstMappedCodePoint = mappedCodePoint;
+        seqFirstCharacterName = characterName;
+
+        seqLastCodePoint = codePoint;
+        seqLastMappedCodePoint = mappedCodePoint;
+        seqLastCharacterName = characterName;
+
+        seqStep = 0;
+        seqLength = 1;
+    }
+
+    private static function appendCodePoint(sb : StringBuf, codePoint : Int) : Void {
+        var r = new Utf8();
+        r.addChar(codePoint);
+        sb.add(r.toString());
+    }
+
+    private static function appendSequence(sb : StringBuf) : Void {
+        if (seqLength <= 0) {
+            return;
+        }
+
+        var codePointStr = "0x" + StringTools.hex(seqFirstCodePoint);
+        var mappedCodePointStr = "0x" + StringTools.hex(seqFirstMappedCodePoint);
+
+        sb.add("\t\t");
+
+        if (seqLength == 1) {
+            sb.add('map[${codePointStr}] = ${mappedCodePointStr};');
+        } else if (seqStep == 1) {
+            sb.add('for (i in 0 ... ${seqLength}) { map[${codePointStr} + i] = ${mappedCodePointStr} + i; }');
+        } else { // seqStep = 2
+            sb.add('for (i in 0 ... ${seqLength}) { map[${codePointStr} + i + i] = ${mappedCodePointStr} + i + i; }');
+        }
+
+        sb.add(" // ");
+        appendCodePoint(sb, seqFirstCodePoint);
+
+        if (seqLength > 1) {
+            sb.add(" - ");
+            appendCodePoint(sb, seqLastCodePoint);
+        }
+
+        sb.add(" => ");
+        appendCodePoint(sb, seqFirstMappedCodePoint);
+
+        if (seqLength > 1) {
+            sb.add(" - ");
+            appendCodePoint(sb, seqLastMappedCodePoint);
+        }
+
+        sb.add(' (${seqFirstCharacterName}');
+
+        if (seqLength > 1) {
+            sb.add(' - ${seqLastCharacterName}');
+        }
+
+        sb.add(")\n");
+        linesGenerated++;
+    }
+
     private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
         Lib.println('Generating ${funcName}...');
         sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
-        sb.add("\t\tvar i = 0;\n"); //to while cycles
+
+        seqFirstCodePoint = -1;
+        linesGenerated = 0;
 
         for (codePoint in unicodeMap.keys()) {
             var row : Array<String> = unicodeMap[codePoint];
@@ -85,8 +153,6 @@ class CaseMapsGenerator {
             if (row[IDX_GENERAL_CATEGORY] != generalCategory) {
                 continue;
             }
-
-            var characterName : String = row[IDX_CHARACTER_NAME];
 
             while (row != null && row[mappingIdx] == "" && row[IDX_CHARACTER_DECOMPOSITION_MAPPING] != "") {
                 row = unicodeMap[row[IDX_CHARACTER_DECOMPOSITION_MAPPING].split(" ")[0]];
@@ -96,110 +162,37 @@ class CaseMapsGenerator {
                 continue;
             }
 
-            curChar = Std.parseInt('0x' + codePoint);
-            curIdx = Std.parseInt('0x' + row[mappingIdx]);
+            var codePoint : Int = Std.parseInt('0x' + codePoint);
+            var mappedCodePoint : Int = Std.parseInt('0x' + row[mappingIdx]);
+            var characterName : String = row[IDX_CHARACTER_NAME];
 
-            if (firstChar == -1) { //only first line
-                newChars();
+            if (seqFirstCodePoint == -1) {
+                initSequence(codePoint, mappedCodePoint, characterName);
                 continue;
             }
 
-            var s = '';
-            if (stepChar == 1) s = checkChars(true, false); //1,2,3
-            else if (stepChar == 2) s = checkChars(false, true); //1,3,5
-            else s = checkChars(true, true); //find relation
-            if (s != null) sb.add(s);
+            var step = codePoint - seqLastCodePoint;
 
-            //sb.add('\t\tmap[0x${codePoint}] = 0x${row[mappingIdx]}; // ');
+            if ((step != 1 && step != 2)
+                || (mappedCodePoint - seqLastMappedCodePoint != step)
+                || (seqStep != 0 && seqStep != step)
+            ) {
+                appendSequence(sb);
+                initSequence(codePoint, mappedCodePoint, characterName);
+                continue;
+            }
 
-            //var r = new Utf8();
-            //r.addChar(Std.parseInt('0x${codePoint}'));
-            //sb.add(r.toString());
-
-            //sb.add(" --> ");
-
-            //var r = new Utf8();
-            //r.addChar(Std.parseInt('0x${row[mappingIdx]}'));
-            //sb.add(r.toString());
-
-            //sb.add(' (${characterName})\n');
+            seqStep = step;
+            seqLastCodePoint = codePoint;
+            seqLastMappedCodePoint = mappedCodePoint;
+            seqLastCharacterName = characterName;
+            seqLength++;
         }
 
-        sb.add(addChars()); //latest line
-        firstChar = -1; //reset
-
+        appendSequence(sb);
         sb.add("\t}\n");
-        trace("Lines: " + numLines);
-        numLines = 0;
-    }
 
-    public static function newChars() : Void {
-        firstChar = curChar;
-        firstIdx = curIdx;
-        prevChar = firstChar;
-        prevIdx = firstIdx;
-        stepChar = 0;
-        numChar = 1;
-    }
-
-    public static function checkChars(one:Bool, two:Bool) : String {
-        var s = '';
-        if (one && curChar == prevChar+1 && curIdx == prevIdx+1) {
-            prevChar = curChar;
-            prevIdx = curIdx;
-            stepChar = 1;
-            numChar++;
-        } else if (two && curChar == prevChar+2 && curIdx == prevIdx+2) {
-            prevChar = curChar;
-            prevIdx = curIdx;
-            stepChar = 2;
-            numChar++;
-        } else {
-            s += addChars();
-            newChars();
-        }
-        return s;
-    }
-
-    public static function addChars(info:Bool=true) : String {
-        var s = '\t\t';
-        var char = StringTools.hex(firstChar, 4);
-        var idx = StringTools.hex(firstIdx, 4);
-        if (numChar > 1) {
-            if (stepChar == 1) s += 'for (i in 0...${numChar}) map[0x${char}+i] = 0x${idx}+i;';
-
-            else s += 'while (i < ${numChar*2}) { map[0x${char}+i] = 0x${idx}+i; i += 2; } i = 0;';
-
-        } else s += 'map[0x${char}] = 0x${idx};';
-
-        if (info) { //A-Z => a-z
-            s += ' //';
-            var r = new Utf8();
-            r.addChar(Std.parseInt('0x${char}'));
-            s += r.toString();
-            
-            if (numChar > 1) {
-                s += '-';
-                var r = new Utf8();
-                r.addChar(Std.parseInt('0x${char}')+numChar-1);
-                s += r.toString();
-            }
-            s += ' => ';
-            var r = new Utf8();
-            r.addChar(Std.parseInt('0x${idx}'));
-            s += r.toString();
-            
-            if (numChar > 1) {
-                s += '-';
-                var r = new Utf8();
-                r.addChar(Std.parseInt('0x${idx}')+numChar-1);
-                s += r.toString();
-            }
-        }
-
-        s += '\n';
-        numLines++;
-        return s;
+        trace("Lines: " + linesGenerated);
     }
 
     public static function main() : Void {

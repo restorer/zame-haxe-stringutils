@@ -4,381 +4,379 @@ package org.zamedev.lib.internal;
 
 class Utf8ExtInternal {
 	public static function fillUpperToLowerMap(map : Map<Int, Int>) : Void {
-		var i = 0;
-		for (i in 0...26) map[0x0041+i] = 0x0061+i; //A-Z => a-z
-		for (i in 0...23) map[0x00C0+i] = 0x00E0+i; //À-Ö => à-ö
-		for (i in 0...7) map[0x00D8+i] = 0x00F8+i; //Ø-Þ => ø-þ
-		while (i < 48) { map[0x0100+i] = 0x0101+i; i += 2; } i = 0; //Ā-ė => ā-Ę
-		map[0x0130] = 0x0069; //İ => i
-		while (i < 6) { map[0x0132+i] = 0x0133+i; i += 2; } i = 0; //Ĳ-Ĵ => ĳ-ĵ
-		while (i < 16) { map[0x0139+i] = 0x013A+i; i += 2; } i = 0; //Ĺ-ŀ => ĺ-Ł
-		while (i < 46) { map[0x014A+i] = 0x014B+i; i += 2; } i = 0; //Ŋ-Š => ŋ-š
-		map[0x0178] = 0x00FF; //Ÿ => ÿ
-		while (i < 6) { map[0x0179+i] = 0x017A+i; i += 2; } i = 0; //Ź-Ż => ź-ż
-		map[0x0181] = 0x0253; //Ɓ => ɓ
-		while (i < 4) { map[0x0182+i] = 0x0183+i; i += 2; } i = 0; //Ƃ-ƃ => ƃ-Ƅ
-		map[0x0186] = 0x0254; //Ɔ => ɔ
-		map[0x0187] = 0x0188; //Ƈ => ƈ
-		for (i in 0...2) map[0x0189+i] = 0x0256+i; //Ɖ-Ɗ => ɖ-ɗ
-		map[0x018B] = 0x018C; //Ƌ => ƌ
-		map[0x018E] = 0x01DD; //Ǝ => ǝ
-		map[0x018F] = 0x0259; //Ə => ə
-		map[0x0190] = 0x025B; //Ɛ => ɛ
-		map[0x0191] = 0x0192; //Ƒ => ƒ
-		map[0x0193] = 0x0260; //Ɠ => ɠ
-		map[0x0194] = 0x0263; //Ɣ => ɣ
-		map[0x0196] = 0x0269; //Ɩ => ɩ
-		map[0x0197] = 0x0268; //Ɨ => ɨ
-		map[0x0198] = 0x0199; //Ƙ => ƙ
-		map[0x019C] = 0x026F; //Ɯ => ɯ
-		map[0x019D] = 0x0272; //Ɲ => ɲ
-		map[0x019F] = 0x0275; //Ɵ => ɵ
-		while (i < 6) { map[0x01A0+i] = 0x01A1+i; i += 2; } i = 0; //Ơ-Ƣ => ơ-ƣ
-		map[0x01A6] = 0x0280; //Ʀ => ʀ
-		map[0x01A7] = 0x01A8; //Ƨ => ƨ
-		map[0x01A9] = 0x0283; //Ʃ => ʃ
-		map[0x01AC] = 0x01AD; //Ƭ => ƭ
-		map[0x01AE] = 0x0288; //Ʈ => ʈ
-		map[0x01AF] = 0x01B0; //Ư => ư
-		for (i in 0...2) map[0x01B1+i] = 0x028A+i; //Ʊ-Ʋ => ʊ-ʋ
-		while (i < 4) { map[0x01B3+i] = 0x01B4+i; i += 2; } i = 0; //Ƴ-ƴ => ƴ-Ƶ
-		map[0x01B7] = 0x0292; //Ʒ => ʒ
-		map[0x01B8] = 0x01B9; //Ƹ => ƹ
-		map[0x01BC] = 0x01BD; //Ƽ => ƽ
-		map[0x01C4] = 0x01C6; //Ǆ => ǆ
-		map[0x01C7] = 0x01C9; //Ǉ => ǉ
-		map[0x01CA] = 0x01CC; //Ǌ => ǌ
-		while (i < 16) { map[0x01CD+i] = 0x01CE+i; i += 2; } i = 0; //Ǎ-ǔ => ǎ-Ǖ
-		while (i < 18) { map[0x01DE+i] = 0x01DF+i; i += 2; } i = 0; //Ǟ-Ǧ => ǟ-ǧ
-		map[0x01F1] = 0x01F3; //Ǳ => ǳ
-		map[0x01F4] = 0x01F5; //Ǵ => ǵ
-		map[0x01F6] = 0x0195; //Ƕ => ƕ
-		map[0x01F7] = 0x01BF; //Ƿ => ƿ
-		while (i < 40) { map[0x01F8+i] = 0x01F9+i; i += 2; } i = 0; //Ǹ-ȋ => ǹ-Ȍ
-		map[0x0220] = 0x019E; //Ƞ => ƞ
-		while (i < 18) { map[0x0222+i] = 0x0223+i; i += 2; } i = 0; //Ȣ-Ȫ => ȣ-ȫ
-		map[0x023A] = 0x2C65; //Ⱥ => ⱥ
-		map[0x023B] = 0x023C; //Ȼ => ȼ
-		map[0x023D] = 0x019A; //Ƚ => ƚ
-		map[0x023E] = 0x2C66; //Ⱦ => ⱦ
-		map[0x0241] = 0x0242; //Ɂ => ɂ
-		map[0x0243] = 0x0180; //Ƀ => ƀ
-		map[0x0244] = 0x0289; //Ʉ => ʉ
-		map[0x0245] = 0x028C; //Ʌ => ʌ
-		while (i < 10) { map[0x0246+i] = 0x0247+i; i += 2; } i = 0; //Ɇ-Ɋ => ɇ-ɋ
-		while (i < 4) { map[0x0370+i] = 0x0371+i; i += 2; } i = 0; //Ͱ-ͱ => ͱ-Ͳ
-		map[0x0376] = 0x0377; //Ͷ => ͷ
-		map[0x037F] = 0x03F3; //Ϳ => ϳ
-		map[0x0386] = 0x03AC; //Ά => ά
-		for (i in 0...3) map[0x0388+i] = 0x03AD+i; //Έ-Ί => έ-ί
-		map[0x038C] = 0x03CC; //Ό => ό
-		for (i in 0...2) map[0x038E+i] = 0x03CD+i; //Ύ-Ώ => ύ-ώ
-		for (i in 0...17) map[0x0391+i] = 0x03B1+i; //Α-Ρ => α-ρ
-		for (i in 0...9) map[0x03A3+i] = 0x03C3+i; //Σ-Ϋ => σ-ϋ
-		map[0x03CF] = 0x03D7; //Ϗ => ϗ
-		while (i < 24) { map[0x03D8+i] = 0x03D9+i; i += 2; } i = 0; //Ϙ-ϣ => ϙ-Ϥ
-		map[0x03F4] = 0x03B8; //ϴ => θ
-		map[0x03F7] = 0x03F8; //Ϸ => ϸ
-		map[0x03F9] = 0x03F2; //Ϲ => ϲ
-		map[0x03FA] = 0x03FB; //Ϻ => ϻ
-		for (i in 0...3) map[0x03FD+i] = 0x037B+i; //Ͻ-Ͽ => ͻ-ͽ
-		for (i in 0...16) map[0x0400+i] = 0x0450+i; //Ѐ-Џ => ѐ-џ
-		for (i in 0...32) map[0x0410+i] = 0x0430+i; //А-Я => а-я
-		while (i < 34) { map[0x0460+i] = 0x0461+i; i += 2; } i = 0; //Ѡ-Ѱ => ѡ-ѱ
-		while (i < 54) { map[0x048A+i] = 0x048B+i; i += 2; } i = 0; //Ҋ-Ҥ => ҋ-ҥ
-		map[0x04C0] = 0x04CF; //Ӏ => ӏ
-		while (i < 14) { map[0x04C1+i] = 0x04C2+i; i += 2; } i = 0; //Ӂ-Ӈ => ӂ-ӈ
-		while (i < 96) { map[0x04D0+i] = 0x04D1+i; i += 2; } i = 0; //Ӑ-ӿ => ӑ-Ԁ
-		for (i in 0...38) map[0x0531+i] = 0x0561+i; //Ա-Ֆ => ա-ֆ
-		for (i in 0...38) map[0x10A0+i] = 0x2D00+i; //Ⴀ-Ⴥ => ⴀ-ⴥ
-		map[0x10C7] = 0x2D27; //Ⴧ => ⴧ
-		map[0x10CD] = 0x2D2D; //Ⴭ => ⴭ
-		for (i in 0...80) map[0x13A0+i] = 0xAB70+i; //Ꭰ-Ꮿ => ꭰ-ꮿ
-		for (i in 0...6) map[0x13F0+i] = 0x13F8+i; //Ᏸ-Ᏽ => ᏸ-ᏽ
-		while (i < 150) { map[0x1E00+i] = 0x1E01+i; i += 2; } i = 0; //Ḁ-Ṋ => ḁ-ṋ
-		map[0x1E9E] = 0x00DF; //ẞ => ß
-		while (i < 96) { map[0x1EA0+i] = 0x1EA1+i; i += 2; } i = 0; //Ạ-ỏ => ạ-Ố
-		for (i in 0...8) map[0x1F08+i] = 0x1F00+i; //Ἀ-Ἇ => ἀ-ἇ
-		for (i in 0...6) map[0x1F18+i] = 0x1F10+i; //Ἐ-Ἕ => ἐ-ἕ
-		for (i in 0...8) map[0x1F28+i] = 0x1F20+i; //Ἠ-Ἧ => ἠ-ἧ
-		for (i in 0...8) map[0x1F38+i] = 0x1F30+i; //Ἰ-Ἷ => ἰ-ἷ
-		for (i in 0...6) map[0x1F48+i] = 0x1F40+i; //Ὀ-Ὅ => ὀ-ὅ
-		while (i < 8) { map[0x1F59+i] = 0x1F51+i; i += 2; } i = 0; //Ὑ-὜ => ὑ-ὔ
-		for (i in 0...8) map[0x1F68+i] = 0x1F60+i; //Ὠ-Ὧ => ὠ-ὧ
-		for (i in 0...2) map[0x1FB8+i] = 0x1FB0+i; //Ᾰ-Ᾱ => ᾰ-ᾱ
-		for (i in 0...2) map[0x1FBA+i] = 0x1F70+i; //Ὰ-Ά => ὰ-ά
-		for (i in 0...4) map[0x1FC8+i] = 0x1F72+i; //Ὲ-Ή => ὲ-ή
-		for (i in 0...2) map[0x1FD8+i] = 0x1FD0+i; //Ῐ-Ῑ => ῐ-ῑ
-		for (i in 0...2) map[0x1FDA+i] = 0x1F76+i; //Ὶ-Ί => ὶ-ί
-		for (i in 0...2) map[0x1FE8+i] = 0x1FE0+i; //Ῠ-Ῡ => ῠ-ῡ
-		for (i in 0...2) map[0x1FEA+i] = 0x1F7A+i; //Ὺ-Ύ => ὺ-ύ
-		map[0x1FEC] = 0x1FE5; //Ῥ => ῥ
-		for (i in 0...2) map[0x1FF8+i] = 0x1F78+i; //Ὸ-Ό => ὸ-ό
-		for (i in 0...2) map[0x1FFA+i] = 0x1F7C+i; //Ὼ-Ώ => ὼ-ώ
-		map[0x2126] = 0x03C9; //Ω => ω
-		map[0x212A] = 0x006B; //K => k
-		map[0x212B] = 0x00E5; //Å => å
-		map[0x2132] = 0x214E; //Ⅎ => ⅎ
-		map[0x2183] = 0x2184; //Ↄ => ↄ
-		for (i in 0...47) map[0x2C00+i] = 0x2C30+i; //Ⰰ-Ⱞ => ⰰ-ⱞ
-		map[0x2C60] = 0x2C61; //Ⱡ => ⱡ
-		map[0x2C62] = 0x026B; //Ɫ => ɫ
-		map[0x2C63] = 0x1D7D; //Ᵽ => ᵽ
-		map[0x2C64] = 0x027D; //Ɽ => ɽ
-		while (i < 6) { map[0x2C67+i] = 0x2C68+i; i += 2; } i = 0; //Ⱨ-Ⱪ => ⱨ-ⱪ
-		map[0x2C6D] = 0x0251; //Ɑ => ɑ
-		map[0x2C6E] = 0x0271; //Ɱ => ɱ
-		map[0x2C6F] = 0x0250; //Ɐ => ɐ
-		map[0x2C70] = 0x0252; //Ɒ => ɒ
-		map[0x2C72] = 0x2C73; //Ⱳ => ⱳ
-		map[0x2C75] = 0x2C76; //Ⱶ => ⱶ
-		for (i in 0...2) map[0x2C7E+i] = 0x023F+i; //Ȿ-Ɀ => ȿ-ɀ
-		while (i < 100) { map[0x2C80+i] = 0x2C81+i; i += 2; } i = 0; //Ⲁ-ⲱ => ⲁ-Ⲳ
-		while (i < 4) { map[0x2CEB+i] = 0x2CEC+i; i += 2; } i = 0; //Ⳬ-ⳬ => ⳬ-Ⳮ
-		map[0x2CF2] = 0x2CF3; //Ⳳ => ⳳ
-		while (i < 46) { map[0xA640+i] = 0xA641+i; i += 2; } i = 0; //Ꙁ-Ꙗ => ꙁ-ꙗ
-		while (i < 28) { map[0xA680+i] = 0xA681+i; i += 2; } i = 0; //Ꚁ-ꚍ => ꚁ-Ꚏ
-		while (i < 14) { map[0xA722+i] = 0xA723+i; i += 2; } i = 0; //Ꜣ-Ꜩ => ꜣ-ꜩ
-		while (i < 62) { map[0xA732+i] = 0xA733+i; i += 2; } i = 0; //Ꜳ-Ꝑ => ꜳ-ꝑ
-		while (i < 4) { map[0xA779+i] = 0xA77A+i; i += 2; } i = 0; //Ꝺ-ꝺ => ꝺ-Ꝼ
-		map[0xA77D] = 0x1D79; //Ᵹ => ᵹ
-		while (i < 10) { map[0xA77E+i] = 0xA77F+i; i += 2; } i = 0; //Ꝿ-Ꞃ => ꝿ-ꞃ
-		map[0xA78B] = 0xA78C; //Ꞌ => ꞌ
-		map[0xA78D] = 0x0265; //Ɥ => ɥ
-		while (i < 4) { map[0xA790+i] = 0xA791+i; i += 2; } i = 0; //Ꞑ-ꞑ => ꞑ-Ꞓ
-		while (i < 20) { map[0xA796+i] = 0xA797+i; i += 2; } i = 0; //Ꞗ-ꞟ => ꞗ-Ꞡ
-		map[0xA7AA] = 0x0266; //Ɦ => ɦ
-		map[0xA7AB] = 0x025C; //Ɜ => ɜ
-		map[0xA7AC] = 0x0261; //Ɡ => ɡ
-		map[0xA7AD] = 0x026C; //Ɬ => ɬ
-		map[0xA7AE] = 0x026A; //Ɪ => ɪ
-		map[0xA7B0] = 0x029E; //Ʞ => ʞ
-		map[0xA7B1] = 0x0287; //Ʇ => ʇ
-		map[0xA7B2] = 0x029D; //Ʝ => ʝ
-		map[0xA7B3] = 0xAB53; //Ꭓ => ꭓ
-		while (i < 4) { map[0xA7B4+i] = 0xA7B5+i; i += 2; } i = 0; //Ꞵ-ꞵ => ꞵ-Ꞷ
-		for (i in 0...26) map[0xFF21+i] = 0xFF41+i; //Ａ-Ｚ => ａ-ｚ
-		for (i in 0...40) map[0x10400+i] = 0x10428+i; //𐐀-𐐧 => 𐐨-𐑏
-		for (i in 0...36) map[0x104B0+i] = 0x104D8+i; //𐒰-𐓓 => 𐓘-𐓻
-		for (i in 0...51) map[0x10C80+i] = 0x10CC0+i; //𐲀-𐲲 => 𐳀-𐳲
-		for (i in 0...32) map[0x118A0+i] = 0x118C0+i; //𑢠-𑢿 => 𑣀-𑣟
-		for (i in 0...34) map[0x1E900+i] = 0x1E922+i; //𞤀-𞤡 => 𞤢-𞥃
+		for (i in 0 ... 26) { map[0x41 + i] = 0x61 + i; } // A - Z => a - z (LATIN CAPITAL LETTER A - LATIN CAPITAL LETTER Z)
+		for (i in 0 ... 23) { map[0xC0 + i] = 0xE0 + i; } // À - Ö => à - ö (LATIN CAPITAL LETTER A WITH GRAVE - LATIN CAPITAL LETTER O WITH DIAERESIS)
+		for (i in 0 ... 7) { map[0xD8 + i] = 0xF8 + i; } // Ø - Þ => ø - þ (LATIN CAPITAL LETTER O WITH STROKE - LATIN CAPITAL LETTER THORN)
+		for (i in 0 ... 24) { map[0x100 + i + i] = 0x101 + i + i; } // Ā - Į => ā - į (LATIN CAPITAL LETTER A WITH MACRON - LATIN CAPITAL LETTER I WITH OGONEK)
+		map[0x130] = 0x69; // İ => i (LATIN CAPITAL LETTER I WITH DOT ABOVE)
+		for (i in 0 ... 3) { map[0x132 + i + i] = 0x133 + i + i; } // Ĳ - Ķ => ĳ - ķ (LATIN CAPITAL LIGATURE IJ - LATIN CAPITAL LETTER K WITH CEDILLA)
+		for (i in 0 ... 8) { map[0x139 + i + i] = 0x13A + i + i; } // Ĺ - Ň => ĺ - ň (LATIN CAPITAL LETTER L WITH ACUTE - LATIN CAPITAL LETTER N WITH CARON)
+		for (i in 0 ... 23) { map[0x14A + i + i] = 0x14B + i + i; } // Ŋ - Ŷ => ŋ - ŷ (LATIN CAPITAL LETTER ENG - LATIN CAPITAL LETTER Y WITH CIRCUMFLEX)
+		map[0x178] = 0xFF; // Ÿ => ÿ (LATIN CAPITAL LETTER Y WITH DIAERESIS)
+		for (i in 0 ... 3) { map[0x179 + i + i] = 0x17A + i + i; } // Ź - Ž => ź - ž (LATIN CAPITAL LETTER Z WITH ACUTE - LATIN CAPITAL LETTER Z WITH CARON)
+		map[0x181] = 0x253; // Ɓ => ɓ (LATIN CAPITAL LETTER B WITH HOOK)
+		for (i in 0 ... 2) { map[0x182 + i + i] = 0x183 + i + i; } // Ƃ - Ƅ => ƃ - ƅ (LATIN CAPITAL LETTER B WITH TOPBAR - LATIN CAPITAL LETTER TONE SIX)
+		map[0x186] = 0x254; // Ɔ => ɔ (LATIN CAPITAL LETTER OPEN O)
+		map[0x187] = 0x188; // Ƈ => ƈ (LATIN CAPITAL LETTER C WITH HOOK)
+		for (i in 0 ... 2) { map[0x189 + i] = 0x256 + i; } // Ɖ - Ɗ => ɖ - ɗ (LATIN CAPITAL LETTER AFRICAN D - LATIN CAPITAL LETTER D WITH HOOK)
+		map[0x18B] = 0x18C; // Ƌ => ƌ (LATIN CAPITAL LETTER D WITH TOPBAR)
+		map[0x18E] = 0x1DD; // Ǝ => ǝ (LATIN CAPITAL LETTER REVERSED E)
+		map[0x18F] = 0x259; // Ə => ə (LATIN CAPITAL LETTER SCHWA)
+		map[0x190] = 0x25B; // Ɛ => ɛ (LATIN CAPITAL LETTER OPEN E)
+		map[0x191] = 0x192; // Ƒ => ƒ (LATIN CAPITAL LETTER F WITH HOOK)
+		map[0x193] = 0x260; // Ɠ => ɠ (LATIN CAPITAL LETTER G WITH HOOK)
+		map[0x194] = 0x263; // Ɣ => ɣ (LATIN CAPITAL LETTER GAMMA)
+		map[0x196] = 0x269; // Ɩ => ɩ (LATIN CAPITAL LETTER IOTA)
+		map[0x197] = 0x268; // Ɨ => ɨ (LATIN CAPITAL LETTER I WITH STROKE)
+		map[0x198] = 0x199; // Ƙ => ƙ (LATIN CAPITAL LETTER K WITH HOOK)
+		map[0x19C] = 0x26F; // Ɯ => ɯ (LATIN CAPITAL LETTER TURNED M)
+		map[0x19D] = 0x272; // Ɲ => ɲ (LATIN CAPITAL LETTER N WITH LEFT HOOK)
+		map[0x19F] = 0x275; // Ɵ => ɵ (LATIN CAPITAL LETTER O WITH MIDDLE TILDE)
+		for (i in 0 ... 3) { map[0x1A0 + i + i] = 0x1A1 + i + i; } // Ơ - Ƥ => ơ - ƥ (LATIN CAPITAL LETTER O WITH HORN - LATIN CAPITAL LETTER P WITH HOOK)
+		map[0x1A6] = 0x280; // Ʀ => ʀ (LATIN LETTER YR)
+		map[0x1A7] = 0x1A8; // Ƨ => ƨ (LATIN CAPITAL LETTER TONE TWO)
+		map[0x1A9] = 0x283; // Ʃ => ʃ (LATIN CAPITAL LETTER ESH)
+		map[0x1AC] = 0x1AD; // Ƭ => ƭ (LATIN CAPITAL LETTER T WITH HOOK)
+		map[0x1AE] = 0x288; // Ʈ => ʈ (LATIN CAPITAL LETTER T WITH RETROFLEX HOOK)
+		map[0x1AF] = 0x1B0; // Ư => ư (LATIN CAPITAL LETTER U WITH HORN)
+		for (i in 0 ... 2) { map[0x1B1 + i] = 0x28A + i; } // Ʊ - Ʋ => ʊ - ʋ (LATIN CAPITAL LETTER UPSILON - LATIN CAPITAL LETTER V WITH HOOK)
+		for (i in 0 ... 2) { map[0x1B3 + i + i] = 0x1B4 + i + i; } // Ƴ - Ƶ => ƴ - ƶ (LATIN CAPITAL LETTER Y WITH HOOK - LATIN CAPITAL LETTER Z WITH STROKE)
+		map[0x1B7] = 0x292; // Ʒ => ʒ (LATIN CAPITAL LETTER EZH)
+		map[0x1B8] = 0x1B9; // Ƹ => ƹ (LATIN CAPITAL LETTER EZH REVERSED)
+		map[0x1BC] = 0x1BD; // Ƽ => ƽ (LATIN CAPITAL LETTER TONE FIVE)
+		map[0x1C4] = 0x1C6; // Ǆ => ǆ (LATIN CAPITAL LETTER DZ WITH CARON)
+		map[0x1C7] = 0x1C9; // Ǉ => ǉ (LATIN CAPITAL LETTER LJ)
+		map[0x1CA] = 0x1CC; // Ǌ => ǌ (LATIN CAPITAL LETTER NJ)
+		for (i in 0 ... 8) { map[0x1CD + i + i] = 0x1CE + i + i; } // Ǎ - Ǜ => ǎ - ǜ (LATIN CAPITAL LETTER A WITH CARON - LATIN CAPITAL LETTER U WITH DIAERESIS AND GRAVE)
+		for (i in 0 ... 9) { map[0x1DE + i + i] = 0x1DF + i + i; } // Ǟ - Ǯ => ǟ - ǯ (LATIN CAPITAL LETTER A WITH DIAERESIS AND MACRON - LATIN CAPITAL LETTER EZH WITH CARON)
+		map[0x1F1] = 0x1F3; // Ǳ => ǳ (LATIN CAPITAL LETTER DZ)
+		map[0x1F4] = 0x1F5; // Ǵ => ǵ (LATIN CAPITAL LETTER G WITH ACUTE)
+		map[0x1F6] = 0x195; // Ƕ => ƕ (LATIN CAPITAL LETTER HWAIR)
+		map[0x1F7] = 0x1BF; // Ƿ => ƿ (LATIN CAPITAL LETTER WYNN)
+		for (i in 0 ... 20) { map[0x1F8 + i + i] = 0x1F9 + i + i; } // Ǹ - Ȟ => ǹ - ȟ (LATIN CAPITAL LETTER N WITH GRAVE - LATIN CAPITAL LETTER H WITH CARON)
+		map[0x220] = 0x19E; // Ƞ => ƞ (LATIN CAPITAL LETTER N WITH LONG RIGHT LEG)
+		for (i in 0 ... 9) { map[0x222 + i + i] = 0x223 + i + i; } // Ȣ - Ȳ => ȣ - ȳ (LATIN CAPITAL LETTER OU - LATIN CAPITAL LETTER Y WITH MACRON)
+		map[0x23A] = 0x2C65; // Ⱥ => ⱥ (LATIN CAPITAL LETTER A WITH STROKE)
+		map[0x23B] = 0x23C; // Ȼ => ȼ (LATIN CAPITAL LETTER C WITH STROKE)
+		map[0x23D] = 0x19A; // Ƚ => ƚ (LATIN CAPITAL LETTER L WITH BAR)
+		map[0x23E] = 0x2C66; // Ⱦ => ⱦ (LATIN CAPITAL LETTER T WITH DIAGONAL STROKE)
+		map[0x241] = 0x242; // Ɂ => ɂ (LATIN CAPITAL LETTER GLOTTAL STOP)
+		map[0x243] = 0x180; // Ƀ => ƀ (LATIN CAPITAL LETTER B WITH STROKE)
+		map[0x244] = 0x289; // Ʉ => ʉ (LATIN CAPITAL LETTER U BAR)
+		map[0x245] = 0x28C; // Ʌ => ʌ (LATIN CAPITAL LETTER TURNED V)
+		for (i in 0 ... 5) { map[0x246 + i + i] = 0x247 + i + i; } // Ɇ - Ɏ => ɇ - ɏ (LATIN CAPITAL LETTER E WITH STROKE - LATIN CAPITAL LETTER Y WITH STROKE)
+		for (i in 0 ... 2) { map[0x370 + i + i] = 0x371 + i + i; } // Ͱ - Ͳ => ͱ - ͳ (GREEK CAPITAL LETTER HETA - GREEK CAPITAL LETTER ARCHAIC SAMPI)
+		map[0x376] = 0x377; // Ͷ => ͷ (GREEK CAPITAL LETTER PAMPHYLIAN DIGAMMA)
+		map[0x37F] = 0x3F3; // Ϳ => ϳ (GREEK CAPITAL LETTER YOT)
+		map[0x386] = 0x3AC; // Ά => ά (GREEK CAPITAL LETTER ALPHA WITH TONOS)
+		for (i in 0 ... 3) { map[0x388 + i] = 0x3AD + i; } // Έ - Ί => έ - ί (GREEK CAPITAL LETTER EPSILON WITH TONOS - GREEK CAPITAL LETTER IOTA WITH TONOS)
+		map[0x38C] = 0x3CC; // Ό => ό (GREEK CAPITAL LETTER OMICRON WITH TONOS)
+		for (i in 0 ... 2) { map[0x38E + i] = 0x3CD + i; } // Ύ - Ώ => ύ - ώ (GREEK CAPITAL LETTER UPSILON WITH TONOS - GREEK CAPITAL LETTER OMEGA WITH TONOS)
+		for (i in 0 ... 17) { map[0x391 + i] = 0x3B1 + i; } // Α - Ρ => α - ρ (GREEK CAPITAL LETTER ALPHA - GREEK CAPITAL LETTER RHO)
+		for (i in 0 ... 9) { map[0x3A3 + i] = 0x3C3 + i; } // Σ - Ϋ => σ - ϋ (GREEK CAPITAL LETTER SIGMA - GREEK CAPITAL LETTER UPSILON WITH DIALYTIKA)
+		map[0x3CF] = 0x3D7; // Ϗ => ϗ (GREEK CAPITAL KAI SYMBOL)
+		for (i in 0 ... 12) { map[0x3D8 + i + i] = 0x3D9 + i + i; } // Ϙ - Ϯ => ϙ - ϯ (GREEK LETTER ARCHAIC KOPPA - COPTIC CAPITAL LETTER DEI)
+		map[0x3F4] = 0x3B8; // ϴ => θ (GREEK CAPITAL THETA SYMBOL)
+		map[0x3F7] = 0x3F8; // Ϸ => ϸ (GREEK CAPITAL LETTER SHO)
+		map[0x3F9] = 0x3F2; // Ϲ => ϲ (GREEK CAPITAL LUNATE SIGMA SYMBOL)
+		map[0x3FA] = 0x3FB; // Ϻ => ϻ (GREEK CAPITAL LETTER SAN)
+		for (i in 0 ... 3) { map[0x3FD + i] = 0x37B + i; } // Ͻ - Ͽ => ͻ - ͽ (GREEK CAPITAL REVERSED LUNATE SIGMA SYMBOL - GREEK CAPITAL REVERSED DOTTED LUNATE SIGMA SYMBOL)
+		for (i in 0 ... 16) { map[0x400 + i] = 0x450 + i; } // Ѐ - Џ => ѐ - џ (CYRILLIC CAPITAL LETTER IE WITH GRAVE - CYRILLIC CAPITAL LETTER DZHE)
+		for (i in 0 ... 32) { map[0x410 + i] = 0x430 + i; } // А - Я => а - я (CYRILLIC CAPITAL LETTER A - CYRILLIC CAPITAL LETTER YA)
+		for (i in 0 ... 17) { map[0x460 + i + i] = 0x461 + i + i; } // Ѡ - Ҁ => ѡ - ҁ (CYRILLIC CAPITAL LETTER OMEGA - CYRILLIC CAPITAL LETTER KOPPA)
+		for (i in 0 ... 27) { map[0x48A + i + i] = 0x48B + i + i; } // Ҋ - Ҿ => ҋ - ҿ (CYRILLIC CAPITAL LETTER SHORT I WITH TAIL - CYRILLIC CAPITAL LETTER ABKHASIAN CHE WITH DESCENDER)
+		map[0x4C0] = 0x4CF; // Ӏ => ӏ (CYRILLIC LETTER PALOCHKA)
+		for (i in 0 ... 7) { map[0x4C1 + i + i] = 0x4C2 + i + i; } // Ӂ - Ӎ => ӂ - ӎ (CYRILLIC CAPITAL LETTER ZHE WITH BREVE - CYRILLIC CAPITAL LETTER EM WITH TAIL)
+		for (i in 0 ... 48) { map[0x4D0 + i + i] = 0x4D1 + i + i; } // Ӑ - Ԯ => ӑ - ԯ (CYRILLIC CAPITAL LETTER A WITH BREVE - CYRILLIC CAPITAL LETTER EL WITH DESCENDER)
+		for (i in 0 ... 38) { map[0x531 + i] = 0x561 + i; } // Ա - Ֆ => ա - ֆ (ARMENIAN CAPITAL LETTER AYB - ARMENIAN CAPITAL LETTER FEH)
+		for (i in 0 ... 38) { map[0x10A0 + i] = 0x2D00 + i; } // Ⴀ - Ⴥ => ⴀ - ⴥ (GEORGIAN CAPITAL LETTER AN - GEORGIAN CAPITAL LETTER HOE)
+		map[0x10C7] = 0x2D27; // Ⴧ => ⴧ (GEORGIAN CAPITAL LETTER YN)
+		map[0x10CD] = 0x2D2D; // Ⴭ => ⴭ (GEORGIAN CAPITAL LETTER AEN)
+		for (i in 0 ... 80) { map[0x13A0 + i] = 0xAB70 + i; } // Ꭰ - Ꮿ => ꭰ - ꮿ (CHEROKEE LETTER A - CHEROKEE LETTER YA)
+		for (i in 0 ... 6) { map[0x13F0 + i] = 0x13F8 + i; } // Ᏸ - Ᏽ => ᏸ - ᏽ (CHEROKEE LETTER YE - CHEROKEE LETTER MV)
+		for (i in 0 ... 75) { map[0x1E00 + i + i] = 0x1E01 + i + i; } // Ḁ - Ẕ => ḁ - ẕ (LATIN CAPITAL LETTER A WITH RING BELOW - LATIN CAPITAL LETTER Z WITH LINE BELOW)
+		map[0x1E9E] = 0xDF; // ẞ => ß (LATIN CAPITAL LETTER SHARP S)
+		for (i in 0 ... 48) { map[0x1EA0 + i + i] = 0x1EA1 + i + i; } // Ạ - Ỿ => ạ - ỿ (LATIN CAPITAL LETTER A WITH DOT BELOW - LATIN CAPITAL LETTER Y WITH LOOP)
+		for (i in 0 ... 8) { map[0x1F08 + i] = 0x1F00 + i; } // Ἀ - Ἇ => ἀ - ἇ (GREEK CAPITAL LETTER ALPHA WITH PSILI - GREEK CAPITAL LETTER ALPHA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 6) { map[0x1F18 + i] = 0x1F10 + i; } // Ἐ - Ἕ => ἐ - ἕ (GREEK CAPITAL LETTER EPSILON WITH PSILI - GREEK CAPITAL LETTER EPSILON WITH DASIA AND OXIA)
+		for (i in 0 ... 8) { map[0x1F28 + i] = 0x1F20 + i; } // Ἠ - Ἧ => ἠ - ἧ (GREEK CAPITAL LETTER ETA WITH PSILI - GREEK CAPITAL LETTER ETA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 8) { map[0x1F38 + i] = 0x1F30 + i; } // Ἰ - Ἷ => ἰ - ἷ (GREEK CAPITAL LETTER IOTA WITH PSILI - GREEK CAPITAL LETTER IOTA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 6) { map[0x1F48 + i] = 0x1F40 + i; } // Ὀ - Ὅ => ὀ - ὅ (GREEK CAPITAL LETTER OMICRON WITH PSILI - GREEK CAPITAL LETTER OMICRON WITH DASIA AND OXIA)
+		for (i in 0 ... 4) { map[0x1F59 + i + i] = 0x1F51 + i + i; } // Ὑ - Ὗ => ὑ - ὗ (GREEK CAPITAL LETTER UPSILON WITH DASIA - GREEK CAPITAL LETTER UPSILON WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 8) { map[0x1F68 + i] = 0x1F60 + i; } // Ὠ - Ὧ => ὠ - ὧ (GREEK CAPITAL LETTER OMEGA WITH PSILI - GREEK CAPITAL LETTER OMEGA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 2) { map[0x1FB8 + i] = 0x1FB0 + i; } // Ᾰ - Ᾱ => ᾰ - ᾱ (GREEK CAPITAL LETTER ALPHA WITH VRACHY - GREEK CAPITAL LETTER ALPHA WITH MACRON)
+		for (i in 0 ... 2) { map[0x1FBA + i] = 0x1F70 + i; } // Ὰ - Ά => ὰ - ά (GREEK CAPITAL LETTER ALPHA WITH VARIA - GREEK CAPITAL LETTER ALPHA WITH OXIA)
+		for (i in 0 ... 4) { map[0x1FC8 + i] = 0x1F72 + i; } // Ὲ - Ή => ὲ - ή (GREEK CAPITAL LETTER EPSILON WITH VARIA - GREEK CAPITAL LETTER ETA WITH OXIA)
+		for (i in 0 ... 2) { map[0x1FD8 + i] = 0x1FD0 + i; } // Ῐ - Ῑ => ῐ - ῑ (GREEK CAPITAL LETTER IOTA WITH VRACHY - GREEK CAPITAL LETTER IOTA WITH MACRON)
+		for (i in 0 ... 2) { map[0x1FDA + i] = 0x1F76 + i; } // Ὶ - Ί => ὶ - ί (GREEK CAPITAL LETTER IOTA WITH VARIA - GREEK CAPITAL LETTER IOTA WITH OXIA)
+		for (i in 0 ... 2) { map[0x1FE8 + i] = 0x1FE0 + i; } // Ῠ - Ῡ => ῠ - ῡ (GREEK CAPITAL LETTER UPSILON WITH VRACHY - GREEK CAPITAL LETTER UPSILON WITH MACRON)
+		for (i in 0 ... 2) { map[0x1FEA + i] = 0x1F7A + i; } // Ὺ - Ύ => ὺ - ύ (GREEK CAPITAL LETTER UPSILON WITH VARIA - GREEK CAPITAL LETTER UPSILON WITH OXIA)
+		map[0x1FEC] = 0x1FE5; // Ῥ => ῥ (GREEK CAPITAL LETTER RHO WITH DASIA)
+		for (i in 0 ... 2) { map[0x1FF8 + i] = 0x1F78 + i; } // Ὸ - Ό => ὸ - ό (GREEK CAPITAL LETTER OMICRON WITH VARIA - GREEK CAPITAL LETTER OMICRON WITH OXIA)
+		for (i in 0 ... 2) { map[0x1FFA + i] = 0x1F7C + i; } // Ὼ - Ώ => ὼ - ώ (GREEK CAPITAL LETTER OMEGA WITH VARIA - GREEK CAPITAL LETTER OMEGA WITH OXIA)
+		map[0x2126] = 0x3C9; // Ω => ω (OHM SIGN)
+		map[0x212A] = 0x6B; // K => k (KELVIN SIGN)
+		map[0x212B] = 0xE5; // Å => å (ANGSTROM SIGN)
+		map[0x2132] = 0x214E; // Ⅎ => ⅎ (TURNED CAPITAL F)
+		map[0x2183] = 0x2184; // Ↄ => ↄ (ROMAN NUMERAL REVERSED ONE HUNDRED)
+		for (i in 0 ... 47) { map[0x2C00 + i] = 0x2C30 + i; } // Ⰰ - Ⱞ => ⰰ - ⱞ (GLAGOLITIC CAPITAL LETTER AZU - GLAGOLITIC CAPITAL LETTER LATINATE MYSLITE)
+		map[0x2C60] = 0x2C61; // Ⱡ => ⱡ (LATIN CAPITAL LETTER L WITH DOUBLE BAR)
+		map[0x2C62] = 0x26B; // Ɫ => ɫ (LATIN CAPITAL LETTER L WITH MIDDLE TILDE)
+		map[0x2C63] = 0x1D7D; // Ᵽ => ᵽ (LATIN CAPITAL LETTER P WITH STROKE)
+		map[0x2C64] = 0x27D; // Ɽ => ɽ (LATIN CAPITAL LETTER R WITH TAIL)
+		for (i in 0 ... 3) { map[0x2C67 + i + i] = 0x2C68 + i + i; } // Ⱨ - Ⱬ => ⱨ - ⱬ (LATIN CAPITAL LETTER H WITH DESCENDER - LATIN CAPITAL LETTER Z WITH DESCENDER)
+		map[0x2C6D] = 0x251; // Ɑ => ɑ (LATIN CAPITAL LETTER ALPHA)
+		map[0x2C6E] = 0x271; // Ɱ => ɱ (LATIN CAPITAL LETTER M WITH HOOK)
+		map[0x2C6F] = 0x250; // Ɐ => ɐ (LATIN CAPITAL LETTER TURNED A)
+		map[0x2C70] = 0x252; // Ɒ => ɒ (LATIN CAPITAL LETTER TURNED ALPHA)
+		map[0x2C72] = 0x2C73; // Ⱳ => ⱳ (LATIN CAPITAL LETTER W WITH HOOK)
+		map[0x2C75] = 0x2C76; // Ⱶ => ⱶ (LATIN CAPITAL LETTER HALF H)
+		for (i in 0 ... 2) { map[0x2C7E + i] = 0x23F + i; } // Ȿ - Ɀ => ȿ - ɀ (LATIN CAPITAL LETTER S WITH SWASH TAIL - LATIN CAPITAL LETTER Z WITH SWASH TAIL)
+		for (i in 0 ... 50) { map[0x2C80 + i + i] = 0x2C81 + i + i; } // Ⲁ - Ⳣ => ⲁ - ⳣ (COPTIC CAPITAL LETTER ALFA - COPTIC CAPITAL LETTER OLD NUBIAN WAU)
+		for (i in 0 ... 2) { map[0x2CEB + i + i] = 0x2CEC + i + i; } // Ⳬ - Ⳮ => ⳬ - ⳮ (COPTIC CAPITAL LETTER CRYPTOGRAMMIC SHEI - COPTIC CAPITAL LETTER CRYPTOGRAMMIC GANGIA)
+		map[0x2CF2] = 0x2CF3; // Ⳳ => ⳳ (COPTIC CAPITAL LETTER BOHAIRIC KHEI)
+		for (i in 0 ... 23) { map[0xA640 + i + i] = 0xA641 + i + i; } // Ꙁ - Ꙭ => ꙁ - ꙭ (CYRILLIC CAPITAL LETTER ZEMLYA - CYRILLIC CAPITAL LETTER DOUBLE MONOCULAR O)
+		for (i in 0 ... 14) { map[0xA680 + i + i] = 0xA681 + i + i; } // Ꚁ - Ꚛ => ꚁ - ꚛ (CYRILLIC CAPITAL LETTER DWE - CYRILLIC CAPITAL LETTER CROSSED O)
+		for (i in 0 ... 7) { map[0xA722 + i + i] = 0xA723 + i + i; } // Ꜣ - Ꜯ => ꜣ - ꜯ (LATIN CAPITAL LETTER EGYPTOLOGICAL ALEF - LATIN CAPITAL LETTER CUATRILLO WITH COMMA)
+		for (i in 0 ... 31) { map[0xA732 + i + i] = 0xA733 + i + i; } // Ꜳ - Ꝯ => ꜳ - ꝯ (LATIN CAPITAL LETTER AA - LATIN CAPITAL LETTER CON)
+		for (i in 0 ... 2) { map[0xA779 + i + i] = 0xA77A + i + i; } // Ꝺ - Ꝼ => ꝺ - ꝼ (LATIN CAPITAL LETTER INSULAR D - LATIN CAPITAL LETTER INSULAR F)
+		map[0xA77D] = 0x1D79; // Ᵹ => ᵹ (LATIN CAPITAL LETTER INSULAR G)
+		for (i in 0 ... 5) { map[0xA77E + i + i] = 0xA77F + i + i; } // Ꝿ - Ꞇ => ꝿ - ꞇ (LATIN CAPITAL LETTER TURNED INSULAR G - LATIN CAPITAL LETTER INSULAR T)
+		map[0xA78B] = 0xA78C; // Ꞌ => ꞌ (LATIN CAPITAL LETTER SALTILLO)
+		map[0xA78D] = 0x265; // Ɥ => ɥ (LATIN CAPITAL LETTER TURNED H)
+		for (i in 0 ... 2) { map[0xA790 + i + i] = 0xA791 + i + i; } // Ꞑ - Ꞓ => ꞑ - ꞓ (LATIN CAPITAL LETTER N WITH DESCENDER - LATIN CAPITAL LETTER C WITH BAR)
+		for (i in 0 ... 10) { map[0xA796 + i + i] = 0xA797 + i + i; } // Ꞗ - Ꞩ => ꞗ - ꞩ (LATIN CAPITAL LETTER B WITH FLOURISH - LATIN CAPITAL LETTER S WITH OBLIQUE STROKE)
+		map[0xA7AA] = 0x266; // Ɦ => ɦ (LATIN CAPITAL LETTER H WITH HOOK)
+		map[0xA7AB] = 0x25C; // Ɜ => ɜ (LATIN CAPITAL LETTER REVERSED OPEN E)
+		map[0xA7AC] = 0x261; // Ɡ => ɡ (LATIN CAPITAL LETTER SCRIPT G)
+		map[0xA7AD] = 0x26C; // Ɬ => ɬ (LATIN CAPITAL LETTER L WITH BELT)
+		map[0xA7AE] = 0x26A; // Ɪ => ɪ (LATIN CAPITAL LETTER SMALL CAPITAL I)
+		map[0xA7B0] = 0x29E; // Ʞ => ʞ (LATIN CAPITAL LETTER TURNED K)
+		map[0xA7B1] = 0x287; // Ʇ => ʇ (LATIN CAPITAL LETTER TURNED T)
+		map[0xA7B2] = 0x29D; // Ʝ => ʝ (LATIN CAPITAL LETTER J WITH CROSSED-TAIL)
+		map[0xA7B3] = 0xAB53; // Ꭓ => ꭓ (LATIN CAPITAL LETTER CHI)
+		for (i in 0 ... 2) { map[0xA7B4 + i + i] = 0xA7B5 + i + i; } // Ꞵ - Ꞷ => ꞵ - ꞷ (LATIN CAPITAL LETTER BETA - LATIN CAPITAL LETTER OMEGA)
+		for (i in 0 ... 26) { map[0xFF21 + i] = 0xFF41 + i; } // Ａ - Ｚ => ａ - ｚ (FULLWIDTH LATIN CAPITAL LETTER A - FULLWIDTH LATIN CAPITAL LETTER Z)
+		for (i in 0 ... 40) { map[0x10400 + i] = 0x10428 + i; } // 𐐀 - 𐐧 => 𐐨 - 𐑏 (DESERET CAPITAL LETTER LONG I - DESERET CAPITAL LETTER EW)
+		for (i in 0 ... 36) { map[0x104B0 + i] = 0x104D8 + i; } // 𐒰 - 𐓓 => 𐓘 - 𐓻 (OSAGE CAPITAL LETTER A - OSAGE CAPITAL LETTER ZHA)
+		for (i in 0 ... 51) { map[0x10C80 + i] = 0x10CC0 + i; } // 𐲀 - 𐲲 => 𐳀 - 𐳲 (OLD HUNGARIAN CAPITAL LETTER A - OLD HUNGARIAN CAPITAL LETTER US)
+		for (i in 0 ... 32) { map[0x118A0 + i] = 0x118C0 + i; } // 𑢠 - 𑢿 => 𑣀 - 𑣟 (WARANG CITI CAPITAL LETTER NGAA - WARANG CITI CAPITAL LETTER VIYO)
+		for (i in 0 ... 34) { map[0x1E900 + i] = 0x1E922 + i; } // 𞤀 - 𞤡 => 𞤢 - 𞥃 (ADLAM CAPITAL LETTER ALIF - ADLAM CAPITAL LETTER SHA)
 	}
 
 	public static function fillLowerToUpperMap(map : Map<Int, Int>) : Void {
-		var i = 0;
-		for (i in 0...26) map[0x0061+i] = 0x0041+i; //a-z => A-Z
-		map[0x00B5] = 0x039C; //µ => Μ
-		for (i in 0...23) map[0x00E0+i] = 0x00C0+i; //à-ö => À-Ö
-		for (i in 0...7) map[0x00F8+i] = 0x00D8+i; //ø-þ => Ø-Þ
-		map[0x00FF] = 0x0178; //ÿ => Ÿ
-		while (i < 48) { map[0x0101+i] = 0x0100+i; i += 2; } i = 0; //ā-Ę => Ā-ė
-		map[0x0131] = 0x0049; //ı => I
-		while (i < 6) { map[0x0133+i] = 0x0132+i; i += 2; } i = 0; //ĳ-ĵ => Ĳ-Ĵ
-		while (i < 16) { map[0x013A+i] = 0x0139+i; i += 2; } i = 0; //ĺ-Ł => Ĺ-ŀ
-		while (i < 46) { map[0x014B+i] = 0x014A+i; i += 2; } i = 0; //ŋ-š => Ŋ-Š
-		while (i < 6) { map[0x017A+i] = 0x0179+i; i += 2; } i = 0; //ź-ż => Ź-Ż
-		map[0x017F] = 0x0053; //ſ => S
-		map[0x0180] = 0x0243; //ƀ => Ƀ
-		while (i < 4) { map[0x0183+i] = 0x0182+i; i += 2; } i = 0; //ƃ-Ƅ => Ƃ-ƃ
-		map[0x0188] = 0x0187; //ƈ => Ƈ
-		map[0x018C] = 0x018B; //ƌ => Ƌ
-		map[0x0192] = 0x0191; //ƒ => Ƒ
-		map[0x0195] = 0x01F6; //ƕ => Ƕ
-		map[0x0199] = 0x0198; //ƙ => Ƙ
-		map[0x019A] = 0x023D; //ƚ => Ƚ
-		map[0x019E] = 0x0220; //ƞ => Ƞ
-		while (i < 6) { map[0x01A1+i] = 0x01A0+i; i += 2; } i = 0; //ơ-ƣ => Ơ-Ƣ
-		map[0x01A8] = 0x01A7; //ƨ => Ƨ
-		map[0x01AD] = 0x01AC; //ƭ => Ƭ
-		map[0x01B0] = 0x01AF; //ư => Ư
-		while (i < 4) { map[0x01B4+i] = 0x01B3+i; i += 2; } i = 0; //ƴ-Ƶ => Ƴ-ƴ
-		map[0x01B9] = 0x01B8; //ƹ => Ƹ
-		map[0x01BD] = 0x01BC; //ƽ => Ƽ
-		map[0x01BF] = 0x01F7; //ƿ => Ƿ
-		map[0x01C6] = 0x01C4; //ǆ => Ǆ
-		map[0x01C9] = 0x01C7; //ǉ => Ǉ
-		map[0x01CC] = 0x01CA; //ǌ => Ǌ
-		while (i < 16) { map[0x01CE+i] = 0x01CD+i; i += 2; } i = 0; //ǎ-Ǖ => Ǎ-ǔ
-		map[0x01DD] = 0x018E; //ǝ => Ǝ
-		while (i < 18) { map[0x01DF+i] = 0x01DE+i; i += 2; } i = 0; //ǟ-ǧ => Ǟ-Ǧ
-		map[0x01F0] = 0x004A; //ǰ => J
-		map[0x01F3] = 0x01F1; //ǳ => Ǳ
-		map[0x01F5] = 0x01F4; //ǵ => Ǵ
-		while (i < 40) { map[0x01F9+i] = 0x01F8+i; i += 2; } i = 0; //ǹ-Ȍ => Ǹ-ȋ
-		while (i < 18) { map[0x0223+i] = 0x0222+i; i += 2; } i = 0; //ȣ-ȫ => Ȣ-Ȫ
-		map[0x023C] = 0x023B; //ȼ => Ȼ
-		for (i in 0...2) map[0x023F+i] = 0x2C7E+i; //ȿ-ɀ => Ȿ-Ɀ
-		map[0x0242] = 0x0241; //ɂ => Ɂ
-		while (i < 10) { map[0x0247+i] = 0x0246+i; i += 2; } i = 0; //ɇ-ɋ => Ɇ-Ɋ
-		map[0x0250] = 0x2C6F; //ɐ => Ɐ
-		map[0x0251] = 0x2C6D; //ɑ => Ɑ
-		map[0x0252] = 0x2C70; //ɒ => Ɒ
-		map[0x0253] = 0x0181; //ɓ => Ɓ
-		map[0x0254] = 0x0186; //ɔ => Ɔ
-		for (i in 0...2) map[0x0256+i] = 0x0189+i; //ɖ-ɗ => Ɖ-Ɗ
-		map[0x0259] = 0x018F; //ə => Ə
-		map[0x025B] = 0x0190; //ɛ => Ɛ
-		map[0x025C] = 0xA7AB; //ɜ => Ɜ
-		map[0x0260] = 0x0193; //ɠ => Ɠ
-		map[0x0261] = 0xA7AC; //ɡ => Ɡ
-		map[0x0263] = 0x0194; //ɣ => Ɣ
-		map[0x0265] = 0xA78D; //ɥ => Ɥ
-		map[0x0266] = 0xA7AA; //ɦ => Ɦ
-		map[0x0268] = 0x0197; //ɨ => Ɨ
-		map[0x0269] = 0x0196; //ɩ => Ɩ
-		map[0x026A] = 0xA7AE; //ɪ => Ɪ
-		map[0x026B] = 0x2C62; //ɫ => Ɫ
-		map[0x026C] = 0xA7AD; //ɬ => Ɬ
-		map[0x026F] = 0x019C; //ɯ => Ɯ
-		map[0x0271] = 0x2C6E; //ɱ => Ɱ
-		map[0x0272] = 0x019D; //ɲ => Ɲ
-		map[0x0275] = 0x019F; //ɵ => Ɵ
-		map[0x027D] = 0x2C64; //ɽ => Ɽ
-		map[0x0280] = 0x01A6; //ʀ => Ʀ
-		map[0x0283] = 0x01A9; //ʃ => Ʃ
-		map[0x0287] = 0xA7B1; //ʇ => Ʇ
-		map[0x0288] = 0x01AE; //ʈ => Ʈ
-		map[0x0289] = 0x0244; //ʉ => Ʉ
-		for (i in 0...2) map[0x028A+i] = 0x01B1+i; //ʊ-ʋ => Ʊ-Ʋ
-		map[0x028C] = 0x0245; //ʌ => Ʌ
-		map[0x0292] = 0x01B7; //ʒ => Ʒ
-		map[0x029D] = 0xA7B2; //ʝ => Ʝ
-		map[0x029E] = 0xA7B0; //ʞ => Ʞ
-		while (i < 4) { map[0x0371+i] = 0x0370+i; i += 2; } i = 0; //ͱ-Ͳ => Ͱ-ͱ
-		map[0x0377] = 0x0376; //ͷ => Ͷ
-		for (i in 0...3) map[0x037B+i] = 0x03FD+i; //ͻ-ͽ => Ͻ-Ͽ
-		map[0x0390] = 0x03AA; //ΐ => Ϊ
-		map[0x03AC] = 0x0386; //ά => Ά
-		for (i in 0...3) map[0x03AD+i] = 0x0388+i; //έ-ί => Έ-Ί
-		map[0x03B0] = 0x03AB; //ΰ => Ϋ
-		for (i in 0...17) map[0x03B1+i] = 0x0391+i; //α-ρ => Α-Ρ
-		map[0x03C2] = 0x03A3; //ς => Σ
-		for (i in 0...9) map[0x03C3+i] = 0x03A3+i; //σ-ϋ => Σ-Ϋ
-		map[0x03CC] = 0x038C; //ό => Ό
-		for (i in 0...2) map[0x03CD+i] = 0x038E+i; //ύ-ώ => Ύ-Ώ
-		map[0x03D0] = 0x0392; //ϐ => Β
-		map[0x03D1] = 0x0398; //ϑ => Θ
-		map[0x03D5] = 0x03A6; //ϕ => Φ
-		map[0x03D6] = 0x03A0; //ϖ => Π
-		map[0x03D7] = 0x03CF; //ϗ => Ϗ
-		while (i < 24) { map[0x03D9+i] = 0x03D8+i; i += 2; } i = 0; //ϙ-Ϥ => Ϙ-ϣ
-		map[0x03F0] = 0x039A; //ϰ => Κ
-		map[0x03F1] = 0x03A1; //ϱ => Ρ
-		map[0x03F2] = 0x03F9; //ϲ => Ϲ
-		map[0x03F3] = 0x037F; //ϳ => Ϳ
-		map[0x03F5] = 0x0395; //ϵ => Ε
-		map[0x03F8] = 0x03F7; //ϸ => Ϸ
-		map[0x03FB] = 0x03FA; //ϻ => Ϻ
-		for (i in 0...32) map[0x0430+i] = 0x0410+i; //а-я => А-Я
-		for (i in 0...16) map[0x0450+i] = 0x0400+i; //ѐ-џ => Ѐ-Џ
-		while (i < 34) { map[0x0461+i] = 0x0460+i; i += 2; } i = 0; //ѡ-ѱ => Ѡ-Ѱ
-		while (i < 54) { map[0x048B+i] = 0x048A+i; i += 2; } i = 0; //ҋ-ҥ => Ҋ-Ҥ
-		while (i < 14) { map[0x04C2+i] = 0x04C1+i; i += 2; } i = 0; //ӂ-ӈ => Ӂ-Ӈ
-		map[0x04CF] = 0x04C0; //ӏ => Ӏ
-		while (i < 96) { map[0x04D1+i] = 0x04D0+i; i += 2; } i = 0; //ӑ-Ԁ => Ӑ-ӿ
-		for (i in 0...38) map[0x0561+i] = 0x0531+i; //ա-ֆ => Ա-Ֆ
-		for (i in 0...6) map[0x13F8+i] = 0x13F0+i; //ᏸ-ᏽ => Ᏸ-Ᏽ
-		map[0x1C80] = 0x0412; //ᲀ => В
-		map[0x1C81] = 0x0414; //ᲁ => Д
-		map[0x1C82] = 0x041E; //ᲂ => О
-		for (i in 0...2) map[0x1C83+i] = 0x0421+i; //ᲃ-ᲄ => С-Т
-		map[0x1C85] = 0x0422; //ᲅ => Т
-		map[0x1C86] = 0x042A; //ᲆ => Ъ
-		map[0x1C87] = 0x0462; //ᲇ => Ѣ
-		map[0x1C88] = 0xA64A; //ᲈ => Ꙋ
-		map[0x1D79] = 0xA77D; //ᵹ => Ᵹ
-		map[0x1D7D] = 0x2C63; //ᵽ => Ᵽ
-		while (i < 150) { map[0x1E01+i] = 0x1E00+i; i += 2; } i = 0; //ḁ-ṋ => Ḁ-Ṋ
-		map[0x1E96] = 0x0048; //ẖ => H
-		map[0x1E97] = 0x0054; //ẗ => T
-		map[0x1E98] = 0x0057; //ẘ => W
-		map[0x1E99] = 0x0059; //ẙ => Y
-		map[0x1E9B] = 0x1E60; //ẛ => Ṡ
-		while (i < 96) { map[0x1EA1+i] = 0x1EA0+i; i += 2; } i = 0; //ạ-Ố => Ạ-ỏ
-		for (i in 0...8) map[0x1F00+i] = 0x1F08+i; //ἀ-ἇ => Ἀ-Ἇ
-		for (i in 0...6) map[0x1F10+i] = 0x1F18+i; //ἐ-ἕ => Ἐ-Ἕ
-		for (i in 0...8) map[0x1F20+i] = 0x1F28+i; //ἠ-ἧ => Ἠ-Ἧ
-		for (i in 0...8) map[0x1F30+i] = 0x1F38+i; //ἰ-ἷ => Ἰ-Ἷ
-		for (i in 0...6) map[0x1F40+i] = 0x1F48+i; //ὀ-ὅ => Ὀ-Ὅ
-		map[0x1F50] = 0x03A5; //ὐ => Υ
-		map[0x1F51] = 0x1F59; //ὑ => Ὑ
-		map[0x1F52] = 0x03A5; //ὒ => Υ
-		map[0x1F53] = 0x1F5B; //ὓ => Ὓ
-		map[0x1F54] = 0x03A5; //ὔ => Υ
-		map[0x1F55] = 0x1F5D; //ὕ => Ὕ
-		map[0x1F56] = 0x03A5; //ὖ => Υ
-		map[0x1F57] = 0x1F5F; //ὗ => Ὗ
-		for (i in 0...8) map[0x1F60+i] = 0x1F68+i; //ὠ-ὧ => Ὠ-Ὧ
-		for (i in 0...2) map[0x1F70+i] = 0x1FBA+i; //ὰ-ά => Ὰ-Ά
-		for (i in 0...4) map[0x1F72+i] = 0x1FC8+i; //ὲ-ή => Ὲ-Ή
-		for (i in 0...2) map[0x1F76+i] = 0x1FDA+i; //ὶ-ί => Ὶ-Ί
-		for (i in 0...2) map[0x1F78+i] = 0x1FF8+i; //ὸ-ό => Ὸ-Ό
-		for (i in 0...2) map[0x1F7A+i] = 0x1FEA+i; //ὺ-ύ => Ὺ-Ύ
-		for (i in 0...2) map[0x1F7C+i] = 0x1FFA+i; //ὼ-ώ => Ὼ-Ώ
-		for (i in 0...8) map[0x1F80+i] = 0x1F88+i; //ᾀ-ᾇ => ᾈ-ᾏ
-		for (i in 0...8) map[0x1F90+i] = 0x1F98+i; //ᾐ-ᾗ => ᾘ-ᾟ
-		for (i in 0...8) map[0x1FA0+i] = 0x1FA8+i; //ᾠ-ᾧ => ᾨ-ᾯ
-		for (i in 0...3) map[0x1FB0+i] = 0x1FB8+i; //ᾰ-ᾲ => Ᾰ-Ὰ
-		map[0x1FB3] = 0x1FBC; //ᾳ => ᾼ
-		map[0x1FB4] = 0x0386; //ᾴ => Ά
-		map[0x1FB6] = 0x0391; //ᾶ => Α
-		map[0x1FB7] = 0x0391; //ᾷ => Α
-		map[0x1FBE] = 0x0399; //ι => Ι
-		map[0x1FC2] = 0x1FCA; //ῂ => Ὴ
-		map[0x1FC3] = 0x1FCC; //ῃ => ῌ
-		map[0x1FC4] = 0x0389; //ῄ => Ή
-		map[0x1FC6] = 0x0397; //ῆ => Η
-		map[0x1FC7] = 0x0397; //ῇ => Η
-		for (i in 0...2) map[0x1FD0+i] = 0x1FD8+i; //ῐ-ῑ => Ῐ-Ῑ
-		map[0x1FD2] = 0x03AA; //ῒ => Ϊ
-		map[0x1FD3] = 0x03AA; //ΐ => Ϊ
-		map[0x1FD6] = 0x0399; //ῖ => Ι
-		map[0x1FD7] = 0x03AA; //ῗ => Ϊ
-		for (i in 0...2) map[0x1FE0+i] = 0x1FE8+i; //ῠ-ῡ => Ῠ-Ῡ
-		map[0x1FE2] = 0x03AB; //ῢ => Ϋ
-		map[0x1FE3] = 0x03AB; //ΰ => Ϋ
-		map[0x1FE4] = 0x03A1; //ῤ => Ρ
-		map[0x1FE5] = 0x1FEC; //ῥ => Ῥ
-		map[0x1FE6] = 0x03A5; //ῦ => Υ
-		map[0x1FE7] = 0x03AB; //ῧ => Ϋ
-		map[0x1FF2] = 0x1FFA; //ῲ => Ὼ
-		map[0x1FF3] = 0x1FFC; //ῳ => ῼ
-		map[0x1FF4] = 0x038F; //ῴ => Ώ
-		map[0x1FF6] = 0x03A9; //ῶ => Ω
-		map[0x1FF7] = 0x03A9; //ῷ => Ω
-		map[0x214E] = 0x2132; //ⅎ => Ⅎ
-		map[0x2184] = 0x2183; //ↄ => Ↄ
-		for (i in 0...47) map[0x2C30+i] = 0x2C00+i; //ⰰ-ⱞ => Ⰰ-Ⱞ
-		map[0x2C61] = 0x2C60; //ⱡ => Ⱡ
-		map[0x2C65] = 0x023A; //ⱥ => Ⱥ
-		map[0x2C66] = 0x023E; //ⱦ => Ⱦ
-		while (i < 6) { map[0x2C68+i] = 0x2C67+i; i += 2; } i = 0; //ⱨ-ⱪ => Ⱨ-Ⱪ
-		map[0x2C73] = 0x2C72; //ⱳ => Ⱳ
-		map[0x2C76] = 0x2C75; //ⱶ => Ⱶ
-		while (i < 100) { map[0x2C81+i] = 0x2C80+i; i += 2; } i = 0; //ⲁ-Ⲳ => Ⲁ-ⲱ
-		while (i < 4) { map[0x2CEC+i] = 0x2CEB+i; i += 2; } i = 0; //ⳬ-Ⳮ => Ⳬ-ⳬ
-		map[0x2CF3] = 0x2CF2; //ⳳ => Ⳳ
-		for (i in 0...38) map[0x2D00+i] = 0x10A0+i; //ⴀ-ⴥ => Ⴀ-Ⴥ
-		map[0x2D27] = 0x10C7; //ⴧ => Ⴧ
-		map[0x2D2D] = 0x10CD; //ⴭ => Ⴭ
-		while (i < 46) { map[0xA641+i] = 0xA640+i; i += 2; } i = 0; //ꙁ-ꙗ => Ꙁ-Ꙗ
-		while (i < 28) { map[0xA681+i] = 0xA680+i; i += 2; } i = 0; //ꚁ-Ꚏ => Ꚁ-ꚍ
-		while (i < 14) { map[0xA723+i] = 0xA722+i; i += 2; } i = 0; //ꜣ-ꜩ => Ꜣ-Ꜩ
-		while (i < 62) { map[0xA733+i] = 0xA732+i; i += 2; } i = 0; //ꜳ-ꝑ => Ꜳ-Ꝑ
-		while (i < 4) { map[0xA77A+i] = 0xA779+i; i += 2; } i = 0; //ꝺ-Ꝼ => Ꝺ-ꝺ
-		while (i < 10) { map[0xA77F+i] = 0xA77E+i; i += 2; } i = 0; //ꝿ-ꞃ => Ꝿ-Ꞃ
-		map[0xA78C] = 0xA78B; //ꞌ => Ꞌ
-		while (i < 4) { map[0xA791+i] = 0xA790+i; i += 2; } i = 0; //ꞑ-Ꞓ => Ꞑ-ꞑ
-		while (i < 20) { map[0xA797+i] = 0xA796+i; i += 2; } i = 0; //ꞗ-Ꞡ => Ꞗ-ꞟ
-		while (i < 4) { map[0xA7B5+i] = 0xA7B4+i; i += 2; } i = 0; //ꞵ-Ꞷ => Ꞵ-ꞵ
-		map[0xAB53] = 0xA7B3; //ꭓ => Ꭓ
-		for (i in 0...80) map[0xAB70+i] = 0x13A0+i; //ꭰ-ꮿ => Ꭰ-Ꮿ
-		for (i in 0...26) map[0xFF41+i] = 0xFF21+i; //ａ-ｚ => Ａ-Ｚ
-		for (i in 0...40) map[0x10428+i] = 0x10400+i; //𐐨-𐑏 => 𐐀-𐐧
-		for (i in 0...36) map[0x104D8+i] = 0x104B0+i; //𐓘-𐓻 => 𐒰-𐓓
-		for (i in 0...51) map[0x10CC0+i] = 0x10C80+i; //𐳀-𐳲 => 𐲀-𐲲
-		for (i in 0...32) map[0x118C0+i] = 0x118A0+i; //𑣀-𑣟 => 𑢠-𑢿
-		for (i in 0...34) map[0x1E922+i] = 0x1E900+i; //𞤢-𞥃 => 𞤀-𞤡
+		for (i in 0 ... 26) { map[0x61 + i] = 0x41 + i; } // a - z => A - Z (LATIN SMALL LETTER A - LATIN SMALL LETTER Z)
+		map[0xB5] = 0x39C; // µ => Μ (MICRO SIGN)
+		for (i in 0 ... 23) { map[0xE0 + i] = 0xC0 + i; } // à - ö => À - Ö (LATIN SMALL LETTER A WITH GRAVE - LATIN SMALL LETTER O WITH DIAERESIS)
+		for (i in 0 ... 7) { map[0xF8 + i] = 0xD8 + i; } // ø - þ => Ø - Þ (LATIN SMALL LETTER O WITH STROKE - LATIN SMALL LETTER THORN)
+		map[0xFF] = 0x178; // ÿ => Ÿ (LATIN SMALL LETTER Y WITH DIAERESIS)
+		for (i in 0 ... 24) { map[0x101 + i + i] = 0x100 + i + i; } // ā - į => Ā - Į (LATIN SMALL LETTER A WITH MACRON - LATIN SMALL LETTER I WITH OGONEK)
+		map[0x131] = 0x49; // ı => I (LATIN SMALL LETTER DOTLESS I)
+		for (i in 0 ... 3) { map[0x133 + i + i] = 0x132 + i + i; } // ĳ - ķ => Ĳ - Ķ (LATIN SMALL LIGATURE IJ - LATIN SMALL LETTER K WITH CEDILLA)
+		for (i in 0 ... 8) { map[0x13A + i + i] = 0x139 + i + i; } // ĺ - ň => Ĺ - Ň (LATIN SMALL LETTER L WITH ACUTE - LATIN SMALL LETTER N WITH CARON)
+		for (i in 0 ... 23) { map[0x14B + i + i] = 0x14A + i + i; } // ŋ - ŷ => Ŋ - Ŷ (LATIN SMALL LETTER ENG - LATIN SMALL LETTER Y WITH CIRCUMFLEX)
+		for (i in 0 ... 3) { map[0x17A + i + i] = 0x179 + i + i; } // ź - ž => Ź - Ž (LATIN SMALL LETTER Z WITH ACUTE - LATIN SMALL LETTER Z WITH CARON)
+		map[0x17F] = 0x53; // ſ => S (LATIN SMALL LETTER LONG S)
+		map[0x180] = 0x243; // ƀ => Ƀ (LATIN SMALL LETTER B WITH STROKE)
+		for (i in 0 ... 2) { map[0x183 + i + i] = 0x182 + i + i; } // ƃ - ƅ => Ƃ - Ƅ (LATIN SMALL LETTER B WITH TOPBAR - LATIN SMALL LETTER TONE SIX)
+		map[0x188] = 0x187; // ƈ => Ƈ (LATIN SMALL LETTER C WITH HOOK)
+		map[0x18C] = 0x18B; // ƌ => Ƌ (LATIN SMALL LETTER D WITH TOPBAR)
+		map[0x192] = 0x191; // ƒ => Ƒ (LATIN SMALL LETTER F WITH HOOK)
+		map[0x195] = 0x1F6; // ƕ => Ƕ (LATIN SMALL LETTER HV)
+		map[0x199] = 0x198; // ƙ => Ƙ (LATIN SMALL LETTER K WITH HOOK)
+		map[0x19A] = 0x23D; // ƚ => Ƚ (LATIN SMALL LETTER L WITH BAR)
+		map[0x19E] = 0x220; // ƞ => Ƞ (LATIN SMALL LETTER N WITH LONG RIGHT LEG)
+		for (i in 0 ... 3) { map[0x1A1 + i + i] = 0x1A0 + i + i; } // ơ - ƥ => Ơ - Ƥ (LATIN SMALL LETTER O WITH HORN - LATIN SMALL LETTER P WITH HOOK)
+		map[0x1A8] = 0x1A7; // ƨ => Ƨ (LATIN SMALL LETTER TONE TWO)
+		map[0x1AD] = 0x1AC; // ƭ => Ƭ (LATIN SMALL LETTER T WITH HOOK)
+		map[0x1B0] = 0x1AF; // ư => Ư (LATIN SMALL LETTER U WITH HORN)
+		for (i in 0 ... 2) { map[0x1B4 + i + i] = 0x1B3 + i + i; } // ƴ - ƶ => Ƴ - Ƶ (LATIN SMALL LETTER Y WITH HOOK - LATIN SMALL LETTER Z WITH STROKE)
+		map[0x1B9] = 0x1B8; // ƹ => Ƹ (LATIN SMALL LETTER EZH REVERSED)
+		map[0x1BD] = 0x1BC; // ƽ => Ƽ (LATIN SMALL LETTER TONE FIVE)
+		map[0x1BF] = 0x1F7; // ƿ => Ƿ (LATIN LETTER WYNN)
+		map[0x1C6] = 0x1C4; // ǆ => Ǆ (LATIN SMALL LETTER DZ WITH CARON)
+		map[0x1C9] = 0x1C7; // ǉ => Ǉ (LATIN SMALL LETTER LJ)
+		map[0x1CC] = 0x1CA; // ǌ => Ǌ (LATIN SMALL LETTER NJ)
+		for (i in 0 ... 8) { map[0x1CE + i + i] = 0x1CD + i + i; } // ǎ - ǜ => Ǎ - Ǜ (LATIN SMALL LETTER A WITH CARON - LATIN SMALL LETTER U WITH DIAERESIS AND GRAVE)
+		map[0x1DD] = 0x18E; // ǝ => Ǝ (LATIN SMALL LETTER TURNED E)
+		for (i in 0 ... 9) { map[0x1DF + i + i] = 0x1DE + i + i; } // ǟ - ǯ => Ǟ - Ǯ (LATIN SMALL LETTER A WITH DIAERESIS AND MACRON - LATIN SMALL LETTER EZH WITH CARON)
+		map[0x1F0] = 0x4A; // ǰ => J (LATIN SMALL LETTER J)
+		map[0x1F3] = 0x1F1; // ǳ => Ǳ (LATIN SMALL LETTER DZ)
+		map[0x1F5] = 0x1F4; // ǵ => Ǵ (LATIN SMALL LETTER G WITH ACUTE)
+		for (i in 0 ... 20) { map[0x1F9 + i + i] = 0x1F8 + i + i; } // ǹ - ȟ => Ǹ - Ȟ (LATIN SMALL LETTER N WITH GRAVE - LATIN SMALL LETTER H WITH CARON)
+		for (i in 0 ... 9) { map[0x223 + i + i] = 0x222 + i + i; } // ȣ - ȳ => Ȣ - Ȳ (LATIN SMALL LETTER OU - LATIN SMALL LETTER Y WITH MACRON)
+		map[0x23C] = 0x23B; // ȼ => Ȼ (LATIN SMALL LETTER C WITH STROKE)
+		for (i in 0 ... 2) { map[0x23F + i] = 0x2C7E + i; } // ȿ - ɀ => Ȿ - Ɀ (LATIN SMALL LETTER S WITH SWASH TAIL - LATIN SMALL LETTER Z WITH SWASH TAIL)
+		map[0x242] = 0x241; // ɂ => Ɂ (LATIN SMALL LETTER GLOTTAL STOP)
+		for (i in 0 ... 5) { map[0x247 + i + i] = 0x246 + i + i; } // ɇ - ɏ => Ɇ - Ɏ (LATIN SMALL LETTER E WITH STROKE - LATIN SMALL LETTER Y WITH STROKE)
+		map[0x250] = 0x2C6F; // ɐ => Ɐ (LATIN SMALL LETTER TURNED A)
+		map[0x251] = 0x2C6D; // ɑ => Ɑ (LATIN SMALL LETTER ALPHA)
+		map[0x252] = 0x2C70; // ɒ => Ɒ (LATIN SMALL LETTER TURNED ALPHA)
+		map[0x253] = 0x181; // ɓ => Ɓ (LATIN SMALL LETTER B WITH HOOK)
+		map[0x254] = 0x186; // ɔ => Ɔ (LATIN SMALL LETTER OPEN O)
+		for (i in 0 ... 2) { map[0x256 + i] = 0x189 + i; } // ɖ - ɗ => Ɖ - Ɗ (LATIN SMALL LETTER D WITH TAIL - LATIN SMALL LETTER D WITH HOOK)
+		map[0x259] = 0x18F; // ə => Ə (LATIN SMALL LETTER SCHWA)
+		map[0x25B] = 0x190; // ɛ => Ɛ (LATIN SMALL LETTER OPEN E)
+		map[0x25C] = 0xA7AB; // ɜ => Ɜ (LATIN SMALL LETTER REVERSED OPEN E)
+		map[0x260] = 0x193; // ɠ => Ɠ (LATIN SMALL LETTER G WITH HOOK)
+		map[0x261] = 0xA7AC; // ɡ => Ɡ (LATIN SMALL LETTER SCRIPT G)
+		map[0x263] = 0x194; // ɣ => Ɣ (LATIN SMALL LETTER GAMMA)
+		map[0x265] = 0xA78D; // ɥ => Ɥ (LATIN SMALL LETTER TURNED H)
+		map[0x266] = 0xA7AA; // ɦ => Ɦ (LATIN SMALL LETTER H WITH HOOK)
+		map[0x268] = 0x197; // ɨ => Ɨ (LATIN SMALL LETTER I WITH STROKE)
+		map[0x269] = 0x196; // ɩ => Ɩ (LATIN SMALL LETTER IOTA)
+		map[0x26A] = 0xA7AE; // ɪ => Ɪ (LATIN LETTER SMALL CAPITAL I)
+		map[0x26B] = 0x2C62; // ɫ => Ɫ (LATIN SMALL LETTER L WITH MIDDLE TILDE)
+		map[0x26C] = 0xA7AD; // ɬ => Ɬ (LATIN SMALL LETTER L WITH BELT)
+		map[0x26F] = 0x19C; // ɯ => Ɯ (LATIN SMALL LETTER TURNED M)
+		map[0x271] = 0x2C6E; // ɱ => Ɱ (LATIN SMALL LETTER M WITH HOOK)
+		map[0x272] = 0x19D; // ɲ => Ɲ (LATIN SMALL LETTER N WITH LEFT HOOK)
+		map[0x275] = 0x19F; // ɵ => Ɵ (LATIN SMALL LETTER BARRED O)
+		map[0x27D] = 0x2C64; // ɽ => Ɽ (LATIN SMALL LETTER R WITH TAIL)
+		map[0x280] = 0x1A6; // ʀ => Ʀ (LATIN LETTER SMALL CAPITAL R)
+		map[0x283] = 0x1A9; // ʃ => Ʃ (LATIN SMALL LETTER ESH)
+		map[0x287] = 0xA7B1; // ʇ => Ʇ (LATIN SMALL LETTER TURNED T)
+		map[0x288] = 0x1AE; // ʈ => Ʈ (LATIN SMALL LETTER T WITH RETROFLEX HOOK)
+		map[0x289] = 0x244; // ʉ => Ʉ (LATIN SMALL LETTER U BAR)
+		for (i in 0 ... 2) { map[0x28A + i] = 0x1B1 + i; } // ʊ - ʋ => Ʊ - Ʋ (LATIN SMALL LETTER UPSILON - LATIN SMALL LETTER V WITH HOOK)
+		map[0x28C] = 0x245; // ʌ => Ʌ (LATIN SMALL LETTER TURNED V)
+		map[0x292] = 0x1B7; // ʒ => Ʒ (LATIN SMALL LETTER EZH)
+		map[0x29D] = 0xA7B2; // ʝ => Ʝ (LATIN SMALL LETTER J WITH CROSSED-TAIL)
+		map[0x29E] = 0xA7B0; // ʞ => Ʞ (LATIN SMALL LETTER TURNED K)
+		for (i in 0 ... 2) { map[0x371 + i + i] = 0x370 + i + i; } // ͱ - ͳ => Ͱ - Ͳ (GREEK SMALL LETTER HETA - GREEK SMALL LETTER ARCHAIC SAMPI)
+		map[0x377] = 0x376; // ͷ => Ͷ (GREEK SMALL LETTER PAMPHYLIAN DIGAMMA)
+		for (i in 0 ... 3) { map[0x37B + i] = 0x3FD + i; } // ͻ - ͽ => Ͻ - Ͽ (GREEK SMALL REVERSED LUNATE SIGMA SYMBOL - GREEK SMALL REVERSED DOTTED LUNATE SIGMA SYMBOL)
+		map[0x390] = 0x3AA; // ΐ => Ϊ (GREEK SMALL LETTER IOTA WITH DIALYTIKA)
+		map[0x3AC] = 0x386; // ά => Ά (GREEK SMALL LETTER ALPHA WITH TONOS)
+		for (i in 0 ... 3) { map[0x3AD + i] = 0x388 + i; } // έ - ί => Έ - Ί (GREEK SMALL LETTER EPSILON WITH TONOS - GREEK SMALL LETTER IOTA WITH TONOS)
+		map[0x3B0] = 0x3AB; // ΰ => Ϋ (GREEK SMALL LETTER UPSILON WITH DIALYTIKA)
+		for (i in 0 ... 17) { map[0x3B1 + i] = 0x391 + i; } // α - ρ => Α - Ρ (GREEK SMALL LETTER ALPHA - GREEK SMALL LETTER RHO)
+		map[0x3C2] = 0x3A3; // ς => Σ (GREEK SMALL LETTER FINAL SIGMA)
+		for (i in 0 ... 9) { map[0x3C3 + i] = 0x3A3 + i; } // σ - ϋ => Σ - Ϋ (GREEK SMALL LETTER SIGMA - GREEK SMALL LETTER UPSILON WITH DIALYTIKA)
+		map[0x3CC] = 0x38C; // ό => Ό (GREEK SMALL LETTER OMICRON WITH TONOS)
+		for (i in 0 ... 2) { map[0x3CD + i] = 0x38E + i; } // ύ - ώ => Ύ - Ώ (GREEK SMALL LETTER UPSILON WITH TONOS - GREEK SMALL LETTER OMEGA WITH TONOS)
+		map[0x3D0] = 0x392; // ϐ => Β (GREEK BETA SYMBOL)
+		map[0x3D1] = 0x398; // ϑ => Θ (GREEK THETA SYMBOL)
+		map[0x3D5] = 0x3A6; // ϕ => Φ (GREEK PHI SYMBOL)
+		map[0x3D6] = 0x3A0; // ϖ => Π (GREEK PI SYMBOL)
+		map[0x3D7] = 0x3CF; // ϗ => Ϗ (GREEK KAI SYMBOL)
+		for (i in 0 ... 12) { map[0x3D9 + i + i] = 0x3D8 + i + i; } // ϙ - ϯ => Ϙ - Ϯ (GREEK SMALL LETTER ARCHAIC KOPPA - COPTIC SMALL LETTER DEI)
+		map[0x3F0] = 0x39A; // ϰ => Κ (GREEK KAPPA SYMBOL)
+		map[0x3F1] = 0x3A1; // ϱ => Ρ (GREEK RHO SYMBOL)
+		map[0x3F2] = 0x3F9; // ϲ => Ϲ (GREEK LUNATE SIGMA SYMBOL)
+		map[0x3F3] = 0x37F; // ϳ => Ϳ (GREEK LETTER YOT)
+		map[0x3F5] = 0x395; // ϵ => Ε (GREEK LUNATE EPSILON SYMBOL)
+		map[0x3F8] = 0x3F7; // ϸ => Ϸ (GREEK SMALL LETTER SHO)
+		map[0x3FB] = 0x3FA; // ϻ => Ϻ (GREEK SMALL LETTER SAN)
+		for (i in 0 ... 32) { map[0x430 + i] = 0x410 + i; } // а - я => А - Я (CYRILLIC SMALL LETTER A - CYRILLIC SMALL LETTER YA)
+		for (i in 0 ... 16) { map[0x450 + i] = 0x400 + i; } // ѐ - џ => Ѐ - Џ (CYRILLIC SMALL LETTER IE WITH GRAVE - CYRILLIC SMALL LETTER DZHE)
+		for (i in 0 ... 17) { map[0x461 + i + i] = 0x460 + i + i; } // ѡ - ҁ => Ѡ - Ҁ (CYRILLIC SMALL LETTER OMEGA - CYRILLIC SMALL LETTER KOPPA)
+		for (i in 0 ... 27) { map[0x48B + i + i] = 0x48A + i + i; } // ҋ - ҿ => Ҋ - Ҿ (CYRILLIC SMALL LETTER SHORT I WITH TAIL - CYRILLIC SMALL LETTER ABKHASIAN CHE WITH DESCENDER)
+		for (i in 0 ... 7) { map[0x4C2 + i + i] = 0x4C1 + i + i; } // ӂ - ӎ => Ӂ - Ӎ (CYRILLIC SMALL LETTER ZHE WITH BREVE - CYRILLIC SMALL LETTER EM WITH TAIL)
+		map[0x4CF] = 0x4C0; // ӏ => Ӏ (CYRILLIC SMALL LETTER PALOCHKA)
+		for (i in 0 ... 48) { map[0x4D1 + i + i] = 0x4D0 + i + i; } // ӑ - ԯ => Ӑ - Ԯ (CYRILLIC SMALL LETTER A WITH BREVE - CYRILLIC SMALL LETTER EL WITH DESCENDER)
+		for (i in 0 ... 38) { map[0x561 + i] = 0x531 + i; } // ա - ֆ => Ա - Ֆ (ARMENIAN SMALL LETTER AYB - ARMENIAN SMALL LETTER FEH)
+		for (i in 0 ... 6) { map[0x13F8 + i] = 0x13F0 + i; } // ᏸ - ᏽ => Ᏸ - Ᏽ (CHEROKEE SMALL LETTER YE - CHEROKEE SMALL LETTER MV)
+		map[0x1C80] = 0x412; // ᲀ => В (CYRILLIC SMALL LETTER ROUNDED VE)
+		map[0x1C81] = 0x414; // ᲁ => Д (CYRILLIC SMALL LETTER LONG-LEGGED DE)
+		map[0x1C82] = 0x41E; // ᲂ => О (CYRILLIC SMALL LETTER NARROW O)
+		for (i in 0 ... 2) { map[0x1C83 + i] = 0x421 + i; } // ᲃ - ᲄ => С - Т (CYRILLIC SMALL LETTER WIDE ES - CYRILLIC SMALL LETTER TALL TE)
+		map[0x1C85] = 0x422; // ᲅ => Т (CYRILLIC SMALL LETTER THREE-LEGGED TE)
+		map[0x1C86] = 0x42A; // ᲆ => Ъ (CYRILLIC SMALL LETTER TALL HARD SIGN)
+		map[0x1C87] = 0x462; // ᲇ => Ѣ (CYRILLIC SMALL LETTER TALL YAT)
+		map[0x1C88] = 0xA64A; // ᲈ => Ꙋ (CYRILLIC SMALL LETTER UNBLENDED UK)
+		map[0x1D79] = 0xA77D; // ᵹ => Ᵹ (LATIN SMALL LETTER INSULAR G)
+		map[0x1D7D] = 0x2C63; // ᵽ => Ᵽ (LATIN SMALL LETTER P WITH STROKE)
+		for (i in 0 ... 75) { map[0x1E01 + i + i] = 0x1E00 + i + i; } // ḁ - ẕ => Ḁ - Ẕ (LATIN SMALL LETTER A WITH RING BELOW - LATIN SMALL LETTER Z WITH LINE BELOW)
+		map[0x1E96] = 0x48; // ẖ => H (LATIN SMALL LETTER H)
+		map[0x1E97] = 0x54; // ẗ => T (LATIN SMALL LETTER T)
+		map[0x1E98] = 0x57; // ẘ => W (LATIN SMALL LETTER W)
+		map[0x1E99] = 0x59; // ẙ => Y (LATIN SMALL LETTER Y)
+		map[0x1E9B] = 0x1E60; // ẛ => Ṡ (LATIN SMALL LETTER LONG S WITH DOT ABOVE)
+		for (i in 0 ... 48) { map[0x1EA1 + i + i] = 0x1EA0 + i + i; } // ạ - ỿ => Ạ - Ỿ (LATIN SMALL LETTER A WITH DOT BELOW - LATIN SMALL LETTER Y WITH LOOP)
+		for (i in 0 ... 8) { map[0x1F00 + i] = 0x1F08 + i; } // ἀ - ἇ => Ἀ - Ἇ (GREEK SMALL LETTER ALPHA WITH PSILI - GREEK SMALL LETTER ALPHA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 6) { map[0x1F10 + i] = 0x1F18 + i; } // ἐ - ἕ => Ἐ - Ἕ (GREEK SMALL LETTER EPSILON WITH PSILI - GREEK SMALL LETTER EPSILON WITH DASIA AND OXIA)
+		for (i in 0 ... 8) { map[0x1F20 + i] = 0x1F28 + i; } // ἠ - ἧ => Ἠ - Ἧ (GREEK SMALL LETTER ETA WITH PSILI - GREEK SMALL LETTER ETA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 8) { map[0x1F30 + i] = 0x1F38 + i; } // ἰ - ἷ => Ἰ - Ἷ (GREEK SMALL LETTER IOTA WITH PSILI - GREEK SMALL LETTER IOTA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 6) { map[0x1F40 + i] = 0x1F48 + i; } // ὀ - ὅ => Ὀ - Ὅ (GREEK SMALL LETTER OMICRON WITH PSILI - GREEK SMALL LETTER OMICRON WITH DASIA AND OXIA)
+		map[0x1F50] = 0x3A5; // ὐ => Υ (GREEK SMALL LETTER UPSILON)
+		map[0x1F51] = 0x1F59; // ὑ => Ὑ (GREEK SMALL LETTER UPSILON WITH DASIA)
+		map[0x1F52] = 0x3A5; // ὒ => Υ (GREEK SMALL LETTER UPSILON)
+		map[0x1F53] = 0x1F5B; // ὓ => Ὓ (GREEK SMALL LETTER UPSILON WITH DASIA AND VARIA)
+		map[0x1F54] = 0x3A5; // ὔ => Υ (GREEK SMALL LETTER UPSILON)
+		map[0x1F55] = 0x1F5D; // ὕ => Ὕ (GREEK SMALL LETTER UPSILON WITH DASIA AND OXIA)
+		map[0x1F56] = 0x3A5; // ὖ => Υ (GREEK SMALL LETTER UPSILON)
+		map[0x1F57] = 0x1F5F; // ὗ => Ὗ (GREEK SMALL LETTER UPSILON WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 8) { map[0x1F60 + i] = 0x1F68 + i; } // ὠ - ὧ => Ὠ - Ὧ (GREEK SMALL LETTER OMEGA WITH PSILI - GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI)
+		for (i in 0 ... 2) { map[0x1F70 + i] = 0x1FBA + i; } // ὰ - ά => Ὰ - Ά (GREEK SMALL LETTER ALPHA WITH VARIA - GREEK SMALL LETTER ALPHA WITH OXIA)
+		for (i in 0 ... 4) { map[0x1F72 + i] = 0x1FC8 + i; } // ὲ - ή => Ὲ - Ή (GREEK SMALL LETTER EPSILON WITH VARIA - GREEK SMALL LETTER ETA WITH OXIA)
+		for (i in 0 ... 2) { map[0x1F76 + i] = 0x1FDA + i; } // ὶ - ί => Ὶ - Ί (GREEK SMALL LETTER IOTA WITH VARIA - GREEK SMALL LETTER IOTA WITH OXIA)
+		for (i in 0 ... 2) { map[0x1F78 + i] = 0x1FF8 + i; } // ὸ - ό => Ὸ - Ό (GREEK SMALL LETTER OMICRON WITH VARIA - GREEK SMALL LETTER OMICRON WITH OXIA)
+		for (i in 0 ... 2) { map[0x1F7A + i] = 0x1FEA + i; } // ὺ - ύ => Ὺ - Ύ (GREEK SMALL LETTER UPSILON WITH VARIA - GREEK SMALL LETTER UPSILON WITH OXIA)
+		for (i in 0 ... 2) { map[0x1F7C + i] = 0x1FFA + i; } // ὼ - ώ => Ὼ - Ώ (GREEK SMALL LETTER OMEGA WITH VARIA - GREEK SMALL LETTER OMEGA WITH OXIA)
+		for (i in 0 ... 8) { map[0x1F80 + i] = 0x1F88 + i; } // ᾀ - ᾇ => ᾈ - ᾏ (GREEK SMALL LETTER ALPHA WITH PSILI AND YPOGEGRAMMENI - GREEK SMALL LETTER ALPHA WITH DASIA AND PERISPOMENI AND YPOGEGRAMMENI)
+		for (i in 0 ... 8) { map[0x1F90 + i] = 0x1F98 + i; } // ᾐ - ᾗ => ᾘ - ᾟ (GREEK SMALL LETTER ETA WITH PSILI AND YPOGEGRAMMENI - GREEK SMALL LETTER ETA WITH DASIA AND PERISPOMENI AND YPOGEGRAMMENI)
+		for (i in 0 ... 8) { map[0x1FA0 + i] = 0x1FA8 + i; } // ᾠ - ᾧ => ᾨ - ᾯ (GREEK SMALL LETTER OMEGA WITH PSILI AND YPOGEGRAMMENI - GREEK SMALL LETTER OMEGA WITH DASIA AND PERISPOMENI AND YPOGEGRAMMENI)
+		for (i in 0 ... 3) { map[0x1FB0 + i] = 0x1FB8 + i; } // ᾰ - ᾲ => Ᾰ - Ὰ (GREEK SMALL LETTER ALPHA WITH VRACHY - GREEK SMALL LETTER ALPHA WITH VARIA)
+		map[0x1FB3] = 0x1FBC; // ᾳ => ᾼ (GREEK SMALL LETTER ALPHA WITH YPOGEGRAMMENI)
+		map[0x1FB4] = 0x386; // ᾴ => Ά (GREEK SMALL LETTER ALPHA WITH TONOS)
+		map[0x1FB6] = 0x391; // ᾶ => Α (GREEK SMALL LETTER ALPHA)
+		map[0x1FB7] = 0x391; // ᾷ => Α (GREEK SMALL LETTER ALPHA)
+		map[0x1FBE] = 0x399; // ι => Ι (GREEK PROSGEGRAMMENI)
+		map[0x1FC2] = 0x1FCA; // ῂ => Ὴ (GREEK SMALL LETTER ETA WITH VARIA)
+		map[0x1FC3] = 0x1FCC; // ῃ => ῌ (GREEK SMALL LETTER ETA WITH YPOGEGRAMMENI)
+		map[0x1FC4] = 0x389; // ῄ => Ή (GREEK SMALL LETTER ETA WITH TONOS)
+		map[0x1FC6] = 0x397; // ῆ => Η (GREEK SMALL LETTER ETA)
+		map[0x1FC7] = 0x397; // ῇ => Η (GREEK SMALL LETTER ETA)
+		for (i in 0 ... 2) { map[0x1FD0 + i] = 0x1FD8 + i; } // ῐ - ῑ => Ῐ - Ῑ (GREEK SMALL LETTER IOTA WITH VRACHY - GREEK SMALL LETTER IOTA WITH MACRON)
+		map[0x1FD2] = 0x3AA; // ῒ => Ϊ (GREEK SMALL LETTER IOTA WITH DIALYTIKA)
+		map[0x1FD3] = 0x3AA; // ΐ => Ϊ (GREEK SMALL LETTER IOTA WITH DIALYTIKA)
+		map[0x1FD6] = 0x399; // ῖ => Ι (GREEK SMALL LETTER IOTA)
+		map[0x1FD7] = 0x3AA; // ῗ => Ϊ (GREEK SMALL LETTER IOTA WITH DIALYTIKA)
+		for (i in 0 ... 2) { map[0x1FE0 + i] = 0x1FE8 + i; } // ῠ - ῡ => Ῠ - Ῡ (GREEK SMALL LETTER UPSILON WITH VRACHY - GREEK SMALL LETTER UPSILON WITH MACRON)
+		map[0x1FE2] = 0x3AB; // ῢ => Ϋ (GREEK SMALL LETTER UPSILON WITH DIALYTIKA)
+		map[0x1FE3] = 0x3AB; // ΰ => Ϋ (GREEK SMALL LETTER UPSILON WITH DIALYTIKA)
+		map[0x1FE4] = 0x3A1; // ῤ => Ρ (GREEK SMALL LETTER RHO)
+		map[0x1FE5] = 0x1FEC; // ῥ => Ῥ (GREEK SMALL LETTER RHO WITH DASIA)
+		map[0x1FE6] = 0x3A5; // ῦ => Υ (GREEK SMALL LETTER UPSILON)
+		map[0x1FE7] = 0x3AB; // ῧ => Ϋ (GREEK SMALL LETTER UPSILON WITH DIALYTIKA)
+		map[0x1FF2] = 0x1FFA; // ῲ => Ὼ (GREEK SMALL LETTER OMEGA WITH VARIA)
+		map[0x1FF3] = 0x1FFC; // ῳ => ῼ (GREEK SMALL LETTER OMEGA WITH YPOGEGRAMMENI)
+		map[0x1FF4] = 0x38F; // ῴ => Ώ (GREEK SMALL LETTER OMEGA WITH TONOS)
+		map[0x1FF6] = 0x3A9; // ῶ => Ω (GREEK SMALL LETTER OMEGA)
+		map[0x1FF7] = 0x3A9; // ῷ => Ω (GREEK SMALL LETTER OMEGA)
+		map[0x214E] = 0x2132; // ⅎ => Ⅎ (TURNED SMALL F)
+		map[0x2184] = 0x2183; // ↄ => Ↄ (LATIN SMALL LETTER REVERSED C)
+		for (i in 0 ... 47) { map[0x2C30 + i] = 0x2C00 + i; } // ⰰ - ⱞ => Ⰰ - Ⱞ (GLAGOLITIC SMALL LETTER AZU - GLAGOLITIC SMALL LETTER LATINATE MYSLITE)
+		map[0x2C61] = 0x2C60; // ⱡ => Ⱡ (LATIN SMALL LETTER L WITH DOUBLE BAR)
+		map[0x2C65] = 0x23A; // ⱥ => Ⱥ (LATIN SMALL LETTER A WITH STROKE)
+		map[0x2C66] = 0x23E; // ⱦ => Ⱦ (LATIN SMALL LETTER T WITH DIAGONAL STROKE)
+		for (i in 0 ... 3) { map[0x2C68 + i + i] = 0x2C67 + i + i; } // ⱨ - ⱬ => Ⱨ - Ⱬ (LATIN SMALL LETTER H WITH DESCENDER - LATIN SMALL LETTER Z WITH DESCENDER)
+		map[0x2C73] = 0x2C72; // ⱳ => Ⱳ (LATIN SMALL LETTER W WITH HOOK)
+		map[0x2C76] = 0x2C75; // ⱶ => Ⱶ (LATIN SMALL LETTER HALF H)
+		for (i in 0 ... 50) { map[0x2C81 + i + i] = 0x2C80 + i + i; } // ⲁ - ⳣ => Ⲁ - Ⳣ (COPTIC SMALL LETTER ALFA - COPTIC SMALL LETTER OLD NUBIAN WAU)
+		for (i in 0 ... 2) { map[0x2CEC + i + i] = 0x2CEB + i + i; } // ⳬ - ⳮ => Ⳬ - Ⳮ (COPTIC SMALL LETTER CRYPTOGRAMMIC SHEI - COPTIC SMALL LETTER CRYPTOGRAMMIC GANGIA)
+		map[0x2CF3] = 0x2CF2; // ⳳ => Ⳳ (COPTIC SMALL LETTER BOHAIRIC KHEI)
+		for (i in 0 ... 38) { map[0x2D00 + i] = 0x10A0 + i; } // ⴀ - ⴥ => Ⴀ - Ⴥ (GEORGIAN SMALL LETTER AN - GEORGIAN SMALL LETTER HOE)
+		map[0x2D27] = 0x10C7; // ⴧ => Ⴧ (GEORGIAN SMALL LETTER YN)
+		map[0x2D2D] = 0x10CD; // ⴭ => Ⴭ (GEORGIAN SMALL LETTER AEN)
+		for (i in 0 ... 23) { map[0xA641 + i + i] = 0xA640 + i + i; } // ꙁ - ꙭ => Ꙁ - Ꙭ (CYRILLIC SMALL LETTER ZEMLYA - CYRILLIC SMALL LETTER DOUBLE MONOCULAR O)
+		for (i in 0 ... 14) { map[0xA681 + i + i] = 0xA680 + i + i; } // ꚁ - ꚛ => Ꚁ - Ꚛ (CYRILLIC SMALL LETTER DWE - CYRILLIC SMALL LETTER CROSSED O)
+		for (i in 0 ... 7) { map[0xA723 + i + i] = 0xA722 + i + i; } // ꜣ - ꜯ => Ꜣ - Ꜯ (LATIN SMALL LETTER EGYPTOLOGICAL ALEF - LATIN SMALL LETTER CUATRILLO WITH COMMA)
+		for (i in 0 ... 31) { map[0xA733 + i + i] = 0xA732 + i + i; } // ꜳ - ꝯ => Ꜳ - Ꝯ (LATIN SMALL LETTER AA - LATIN SMALL LETTER CON)
+		for (i in 0 ... 2) { map[0xA77A + i + i] = 0xA779 + i + i; } // ꝺ - ꝼ => Ꝺ - Ꝼ (LATIN SMALL LETTER INSULAR D - LATIN SMALL LETTER INSULAR F)
+		for (i in 0 ... 5) { map[0xA77F + i + i] = 0xA77E + i + i; } // ꝿ - ꞇ => Ꝿ - Ꞇ (LATIN SMALL LETTER TURNED INSULAR G - LATIN SMALL LETTER INSULAR T)
+		map[0xA78C] = 0xA78B; // ꞌ => Ꞌ (LATIN SMALL LETTER SALTILLO)
+		for (i in 0 ... 2) { map[0xA791 + i + i] = 0xA790 + i + i; } // ꞑ - ꞓ => Ꞑ - Ꞓ (LATIN SMALL LETTER N WITH DESCENDER - LATIN SMALL LETTER C WITH BAR)
+		for (i in 0 ... 10) { map[0xA797 + i + i] = 0xA796 + i + i; } // ꞗ - ꞩ => Ꞗ - Ꞩ (LATIN SMALL LETTER B WITH FLOURISH - LATIN SMALL LETTER S WITH OBLIQUE STROKE)
+		for (i in 0 ... 2) { map[0xA7B5 + i + i] = 0xA7B4 + i + i; } // ꞵ - ꞷ => Ꞵ - Ꞷ (LATIN SMALL LETTER BETA - LATIN SMALL LETTER OMEGA)
+		map[0xAB53] = 0xA7B3; // ꭓ => Ꭓ (LATIN SMALL LETTER CHI)
+		for (i in 0 ... 80) { map[0xAB70 + i] = 0x13A0 + i; } // ꭰ - ꮿ => Ꭰ - Ꮿ (CHEROKEE SMALL LETTER A - CHEROKEE SMALL LETTER YA)
+		for (i in 0 ... 26) { map[0xFF41 + i] = 0xFF21 + i; } // ａ - ｚ => Ａ - Ｚ (FULLWIDTH LATIN SMALL LETTER A - FULLWIDTH LATIN SMALL LETTER Z)
+		for (i in 0 ... 40) { map[0x10428 + i] = 0x10400 + i; } // 𐐨 - 𐑏 => 𐐀 - 𐐧 (DESERET SMALL LETTER LONG I - DESERET SMALL LETTER EW)
+		for (i in 0 ... 36) { map[0x104D8 + i] = 0x104B0 + i; } // 𐓘 - 𐓻 => 𐒰 - 𐓓 (OSAGE SMALL LETTER A - OSAGE SMALL LETTER ZHA)
+		for (i in 0 ... 51) { map[0x10CC0 + i] = 0x10C80 + i; } // 𐳀 - 𐳲 => 𐲀 - 𐲲 (OLD HUNGARIAN SMALL LETTER A - OLD HUNGARIAN SMALL LETTER US)
+		for (i in 0 ... 32) { map[0x118C0 + i] = 0x118A0 + i; } // 𑣀 - 𑣟 => 𑢠 - 𑢿 (WARANG CITI SMALL LETTER NGAA - WARANG CITI SMALL LETTER VIYO)
+		for (i in 0 ... 34) { map[0x1E922 + i] = 0x1E900 + i; } // 𞤢 - 𞥃 => 𞤀 - 𞤡 (ADLAM SMALL LETTER ALIF - ADLAM SMALL LETTER SHA)
 	}
 }
