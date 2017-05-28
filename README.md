@@ -33,7 +33,13 @@ Allows you to generate cool-looking SEO-friendly URL from string on belarusian o
 trace(Transliteration.be("Уладзімір Караткевіч - Хрыстос Прызямліўся Ў Гародні"));
 ```
 
-will give you `uladzimir-karatkievich-khrystos-pryziamliwsia-w-harodni`
+will give you `uladzimir-karatkievich-khrystos-pryziamliwsia-w-harodni`, and
+
+```haxe
+trace(Transliteration.ru("Съешь же ещё этих мягких французских булок да выпей чаю"));
+```
+
+will give you `s-esh-zhe-eschyo-ehtikh-myagkikh-francuzskikh-bulok-da-vypej-chaju`.
 
 ## Product support
 
