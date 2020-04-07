@@ -1,6 +1,6 @@
 package org.zamedev.lib.internal;
 
-// Use org.zamedev.lib.tools.CaseMapsGenerator to generate this file
+// Use org.zamedev.lib.internal.CaseMapsGenerator to generate this file.
 
 class Utf8ExtInternal {
 	public static function fillUpperToLowerMap(map : Map<Int, Int>) : Void {

@@ -1,6 +1,6 @@
 package internal;
 
-// Use tests.tools.EthalonCaseMapsGenerator to generate this file
+// Use internal.EthalonCaseMapsGenerator to generate this file.
 
 class Utf8ExtInternalEthalon {
 	public static function fillUpperToLowerMap(map : Map<Int, Int>) : Void {

@@ -1,0 +1,12 @@
+{
+    "name": "zame-stringutils",
+    "url": "https://github.com/restorer/zame-haxe-stringutils",
+    "license": "MIT",
+    "tags": [],
+    "description": "String utils for Haxe",
+    "version": "1.0.0",
+    "releasenote": "Initial release",
+    "contributors": [
+        "restorer"
+    ]
+}

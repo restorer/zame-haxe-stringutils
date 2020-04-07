@@ -1,11 +1,13 @@
-package org.zamedev.lib.tools;
+package org.zamedev.lib.internal;
 
-import haxe.Utf8;
 import haxe.io.Eof;
 import haxe.io.Path;
-import neko.Lib;
 import sys.io.File;
 import org.zamedev.lib.ds.LinkedMap;
+
+#if neko
+    import neko.Utf8;
+#end
 
 using StringTools;
 
@@ -47,11 +49,11 @@ class CaseMapsGenerator {
     private static var linesGenerated : Int = 0;
 
     macro private static function resolveThisPath() {
-        return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/tools/CaseMapsGenerator.hx") };
+        return macro $v{ haxe.macro.Context.resolvePath("org/zamedev/lib/internal/CaseMapsGenerator.hx") };
     }
 
-    private static function resolveInternalDir() : String {
-        return Path.directory(resolveThisPath()) + "/../internal";
+    private static function resolveThisDir() : String {
+        return Path.directory(resolveThisPath());
     }
 
     private static function readUnicodeData() : Void {
@@ -91,9 +93,13 @@ class CaseMapsGenerator {
     }
 
     private static function appendCodePoint(sb : StringBuf, codePoint : Int) : Void {
-        var r = new Utf8();
-        r.addChar(codePoint);
-        sb.add(r.toString());
+        #if neko
+            var r = new Utf8();
+            r.addChar(codePoint);
+            sb.add(r.toString());
+        #else
+            sb.add(String.fromCharCode(codePoint));
+        #end
     }
 
     private static function appendSequence(sb : StringBuf) : Void {
@@ -141,7 +147,7 @@ class CaseMapsGenerator {
     }
 
     private static function appendMapperFunc(sb : StringBuf, funcName : String, generalCategory : String, mappingIdx : Int) : Void {
-        Lib.println('Generating ${funcName}...');
+        println('Generating ${funcName}...');
         sb.add('\tpublic static function ${funcName}(map : Map<Int, Int>) : Void {\n');
 
         seqFirstCodePoint = -1;
@@ -192,11 +198,11 @@ class CaseMapsGenerator {
         appendSequence(sb);
         sb.add("\t}\n");
 
-        trace("Lines: " + linesGenerated);
+        println("Lines: " + linesGenerated);
     }
 
     public static function main() : Void {
-        Lib.println("Preparing...");
+        println("Preparing...");
 
         readUnicodeData();
 
@@ -204,7 +210,7 @@ class CaseMapsGenerator {
 
         sb.add("package org.zamedev.lib.internal;\n");
         sb.add("\n");
-        sb.add("// Use org.zamedev.lib.tools.CaseMapsGenerator to generate this file\n");
+        sb.add("// Use org.zamedev.lib.internal.CaseMapsGenerator to generate this file.\n");
         sb.add("\n");
         sb.add("class Utf8ExtInternal {\n");
         appendMapperFunc(sb, "fillUpperToLowerMap", "Lu", IDX_LOWERCASE_MAPPING);
@@ -212,9 +218,19 @@ class CaseMapsGenerator {
         appendMapperFunc(sb, "fillLowerToUpperMap", "Ll", IDX_UPPERCASE_MAPPING);
         sb.add("}\n");
 
-        Lib.println("Writing result file...");
-        File.saveContent(resolveInternalDir() + "/Utf8ExtInternal.hx" , sb.toString());
+        println("Writing result file...");
+        File.saveContent(resolveThisDir() + "/Utf8ExtInternal.hx" , sb.toString());
 
-        Lib.println("Done");
+        println("Done");
+    }
+
+    private static function println(message : String) : Void {
+        #if sys
+            Sys.print(message + "\n");
+        #elseif neko
+            neko.Lib.println(message);
+        #else
+            trace(message);
+        #end
     }
 }
